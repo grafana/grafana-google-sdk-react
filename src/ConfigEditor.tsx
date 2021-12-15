@@ -1,111 +1,166 @@
-import React, { PureComponent } from 'react';
-import { Select, FieldSet, InlineField, Alert } from '@grafana/ui';
-import { DataSourcePluginOptionsEditorProps, onUpdateDatasourceJsonDataOptionSelect } from '@grafana/data';
-import { AuthType, authTypes, CloudMonitoringOptions, CloudMonitoringSecureJsonData } from './types';
-import { JWTConfig } from './JWTConfig';
+import {
+  DataSourcePluginOptionsEditorProps,
+  onUpdateDatasourceJsonDataOption,
+  onUpdateDatasourceJsonDataOptionSelect,
+} from '@grafana/data';
+import { Field, FieldSet, Input, RadioButtonGroup, Select } from '@grafana/ui';
 
-export type Props = DataSourcePluginOptionsEditorProps<CloudMonitoringOptions, CloudMonitoringSecureJsonData>;
+import React from 'react';
+import { JWTConfigEditor } from './components/JWTConfigEditor';
+import { JWTForm } from './components/JWTForm';
+import { ConfigurationHelp } from './components/ConfigurationHelp';
+import { GOOGLE_AUTH_TYPE_OPTIONS, PROCESSING_LOCATIONS, QUERY_PRIORITIES } from './constants';
+import { BigQueryOptions, BigQuerySecureJsonData, GoogleAuthType, QueryPriority } from './types';
 
-export class ConfigEditor extends PureComponent<Props> {
-  render() {
-    const { options, onOptionsChange } = this.props;
-    const { secureJsonFields, jsonData } = options;
+export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<BigQueryOptions, BigQuerySecureJsonData>;
 
-    if (!jsonData.hasOwnProperty('authenticationType')) {
-      jsonData.authenticationType = AuthType.JWT;
-    }
+export const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
+  const { options, onOptionsChange } = props;
+  const { jsonData, secureJsonFields, secureJsonData } = options;
 
-    return (
-      <>
-        <div className="gf-form-group">
-          <div className="grafana-info-box">
-            <h4>Google Cloud Monitoring Authentication</h4>
-            <p>
-              There are two ways to authenticate the Google Cloud Monitoring plugin - either by uploading a Service
-              Account key file or by automatically retrieving credentials from the Google metadata server. The latter
-              option is only available when running Grafana on a GCE virtual machine.
-            </p>
+  if (!jsonData.authenticationType) {
+    jsonData.authenticationType = GoogleAuthType.JWT;
+  }
 
-            <h5>Uploading a Service Account Key File</h5>
-            <p>
-              There are two ways to authenticate the Google Cloud Monitoring plugin. You can upload a Service Account
-              key file or automatically retrieve credentials from the Google metadata server. The latter option is only
-              available when running Grafana on a GCE virtual machine.
-            </p>
-            <p>
-              The <strong>Monitoring Viewer</strong> role provides all the permissions that Grafana needs. The following
-              API needs to be enabled on GCP for the data source to work:{' '}
-              <a
-                className="external-link"
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://console.cloud.google.com/apis/library/monitoring.googleapis.com"
-              >
-                Monitoring API
-              </a>
-            </p>
+  const isJWT = jsonData.authenticationType === GoogleAuthType.JWT || jsonData.authenticationType === undefined;
 
-            <h5>GCE Default Service Account</h5>
-            <p>
-              If Grafana is running on a Google Compute Engine (GCE) virtual machine, it is possible for Grafana to
-              automatically retrieve the default project id and authentication token from the metadata server. In order
-              for this to work, you need to make sure that you have a service account that is setup as the default
-              account for the virtual machine and that the service account has been given read access to the Google
-              Cloud Monitoring Monitoring API.
-            </p>
+  const onAuthTypeChange = (authenticationType: GoogleAuthType) => {
+    onResetApiKey({ authenticationType });
+  };
 
-            <p>
-              Detailed instructions on how to create a Service Account can be found{' '}
-              <a
-                className="external-link"
-                target="_blank"
-                rel="noopener noreferrer"
-                href="https://grafana.com/docs/grafana/latest/datasources/google-cloud-monitoring/"
-              >
-                in the documentation.
-              </a>
-            </p>
-          </div>
-        </div>
+  const hasJWTConfigured = Boolean(
+    secureJsonFields &&
+      secureJsonFields.privateKey &&
+      jsonData.clientEmail &&
+      jsonData.defaultProject &&
+      jsonData.tokenUri
+  );
 
-        <FieldSet>
-          <InlineField label="Authentication type" labelWidth={20}>
-            <Select
-              menuShouldPortal
-              width={40}
-              value={authTypes.find((x) => x.value === jsonData.authenticationType) || authTypes[0]}
-              options={authTypes}
-              defaultValue={jsonData.authenticationType}
-              onChange={onUpdateDatasourceJsonDataOptionSelect(this.props, 'authenticationType')}
-            />
-          </InlineField>
-          {jsonData.authenticationType === AuthType.JWT && (
-            <JWTConfig
-              isConfigured={secureJsonFields && !!secureJsonFields.jwt}
-              onChange={({ private_key, client_email, project_id, token_uri }) => {
+  const onResetApiKey = (jsonData?: Partial<BigQueryOptions>) => {
+    const nextSecureJsonData = { ...secureJsonData };
+    const nextJsonData = !jsonData ? { ...options.jsonData } : { ...options.jsonData, ...jsonData };
+
+    delete nextJsonData.clientEmail;
+    delete nextJsonData.defaultProject;
+    delete nextJsonData.tokenUri;
+    delete nextSecureJsonData.privateKey;
+
+    onOptionsChange({
+      ...options,
+      secureJsonData: nextSecureJsonData,
+      jsonData: nextJsonData,
+    });
+  };
+
+  const onJWTFormChange = (key: keyof BigQueryOptions) => onUpdateDatasourceJsonDataOption(props, key);
+
+  return (
+    <>
+      <ConfigurationHelp />
+
+      <FieldSet label="Authentication">
+        <Field label="Authentication type">
+          <RadioButtonGroup
+            options={GOOGLE_AUTH_TYPE_OPTIONS}
+            value={jsonData.authenticationType || GoogleAuthType.JWT}
+            onChange={onAuthTypeChange}
+          />
+        </Field>
+      </FieldSet>
+
+      {isJWT && (
+        <FieldSet label="JWT Key Details">
+          {hasJWTConfigured ? (
+            <JWTForm options={options.jsonData} onReset={onResetApiKey} onChange={onJWTFormChange} />
+          ) : (
+            <JWTConfigEditor
+              onChange={(jwt) => {
                 onOptionsChange({
                   ...options,
+                  secureJsonFields: { ...secureJsonFields, privateKey: true },
                   secureJsonData: {
-                    ...options.secureJsonData,
-                    privateKey: private_key,
+                    ...secureJsonData,
+                    privateKey: jwt.privateKey,
                   },
                   jsonData: {
-                    ...options.jsonData,
-                    defaultProject: project_id,
-                    clientEmail: client_email,
-                    tokenUri: token_uri,
+                    ...jsonData,
+                    clientEmail: jwt.clientEmail,
+                    defaultProject: jwt.projectId,
+                    tokenUri: jwt.tokenUri,
                   },
                 });
               }}
-            ></JWTConfig>
-          )}
+            />
+          )}{' '}
         </FieldSet>
-        {jsonData.authenticationType === AuthType.GCE && (
-          <Alert title="" severity="info">
-            Verify GCE default service account by clicking Save & Test
-          </Alert>
-        )}
-      </>
-    );
-  }
-}
+      )}
+
+      <FieldSet label="Other settings">
+        <Field
+          label="Flat rate project"
+          description="The project that the Queries will be run in if you are using a flat-rate pricing model"
+        >
+          <Input
+            className="width-30"
+            value={jsonData.flatRateProject || ''}
+            onChange={onUpdateDatasourceJsonDataOption(props, 'flatRateProject')}
+          />
+        </Field>
+
+        <Field
+          label="Processing location"
+          description={
+            <span>
+              Read more about processing location{' '}
+              <a
+                href="https://cloud.google.com/bigquery/docs/locations"
+                rel="noreferrer"
+                className="external-link"
+                target="_blank"
+              >
+                here
+              </a>
+            </span>
+          }
+        >
+          <Select
+            className="width-30"
+            placeholder="Default US"
+            value={jsonData.processingLocation || ''}
+            options={PROCESSING_LOCATIONS}
+            onChange={onUpdateDatasourceJsonDataOptionSelect(props, 'processingLocation')}
+            menuShouldPortal={true}
+          />
+        </Field>
+
+        <Field
+          label="Query priority"
+          description={
+            <span>
+              Read more about query priotities{' '}
+              <a
+                href="https://cloud.google.com/bigquery/docs/query-overview#types_of_queries"
+                className="external-link"
+                rel="noreferrer"
+                target="_blank"
+              >
+                here
+              </a>
+            </span>
+          }
+        >
+          <RadioButtonGroup
+            options={QUERY_PRIORITIES}
+            value={jsonData.queryPriority || QueryPriority.Interactive}
+            onChange={(v) => {
+              props.onOptionsChange({
+                ...options,
+                jsonData: { ...jsonData, queryPriority: v },
+              });
+            }}
+          />
+        </Field>
+      </FieldSet>
+    </>
+  );
+};

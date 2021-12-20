@@ -1,2 +1,2 @@
-export {ConfigEditor} from './ConfigEditor'
+export {ConnectionConfig} from './ConnectionConfig'
 export * from './types';

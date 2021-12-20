@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { isObject } from 'lodash';
 import { FileDropzone, TextArea, LinkButton, useTheme2, Field, Button } from '@grafana/ui';
-import { TEST_IDS } from '../utils/testIds';
+import { TEST_IDS } from '../testIds';
 
 const configKeys = ['private_key', 'token_uri', 'client_email', 'project_id'];
 type JWTConfigKeys = 'privateKey' | 'tokenUri' | 'clientEmail' | 'projectId';

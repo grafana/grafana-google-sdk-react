@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button, Field, Input, Tooltip } from '@grafana/ui';
-import { BigQueryOptions } from '../types';
-import { TEST_IDS } from '../utils/testIds';
+import { DataSourceOptions } from '../types';
+import { TEST_IDS } from '../testIds';
 
 interface JWTFormProps {
-  options: BigQueryOptions;
+  options: DataSourceOptions;
   onReset: () => void;
-  onChange: (key: keyof BigQueryOptions) => (e: React.SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  onChange: (key: keyof DataSourceOptions) => (e: React.SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onChange }) => {
   return (

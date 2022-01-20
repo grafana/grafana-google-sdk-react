@@ -97,7 +97,7 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (props) => {
             className="external-link"
             target="_blank"
             rel="noopener noreferrer"
-            href="https://grafana.com/docs/grafana/latest/datasources/google-cloud-monitoring/"
+            href="https://grafana.com/docs/grafana/latest/datasources/google-cloud-monitoring/google-authentication/"
           >
             in the documentation.
           </a>

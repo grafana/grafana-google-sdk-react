@@ -1,14 +1,12 @@
-import {
-  DataSourcePluginOptionsEditorProps,
-  onUpdateDatasourceJsonDataOption,
-} from '@grafana/data';
+import { DataSourcePluginOptionsEditorProps, onUpdateDatasourceJsonDataOption } from '@grafana/data';
 import { Alert, Field, FieldSet, RadioButtonGroup } from '@grafana/ui';
 
 import React from 'react';
+import { TEST_IDS } from 'testIds';
 import { JWTConfigEditor } from './components/JWTConfigEditor';
 import { JWTForm } from './components/JWTForm';
 import { GOOGLE_AUTH_TYPE_OPTIONS } from './constants';
-import { DataSourceOptions, DataSourceSecureJsonData, GoogleAuthType} from './types';
+import { DataSourceOptions, DataSourceSecureJsonData, GoogleAuthType } from './types';
 
 export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<DataSourceOptions, DataSourceSecureJsonData>;
 
@@ -90,7 +88,7 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (props) => {
           )}{' '}
         </FieldSet>
       )}
-      <div className="grafana-info-box" style={{ marginTop: '16px' }}>
+      <div className="grafana-info-box" style={{ marginTop: '16px' }} data-testid={TEST_IDS.helpBox}>
         <p>
           Don’t know how to get a service account key file or create a service account? Read more{' '}
           <a
@@ -105,9 +103,9 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (props) => {
       </div>
       {!isJWT && (
         <Alert title="" severity="info">
-            Verify GCE default service account by clicking Save & Test
-          </Alert>
-        )}
+          Verify GCE default service account by clicking Save & Test
+        </Alert>
+      )}
     </>
   );
 };

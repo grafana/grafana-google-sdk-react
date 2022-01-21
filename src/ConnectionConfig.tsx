@@ -10,7 +10,7 @@ import { DataSourceOptions, DataSourceSecureJsonData, GoogleAuthType } from './t
 
 export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<DataSourceOptions, DataSourceSecureJsonData>;
 
-export const ConnectionConfig: React.FC<ConfigEditorProps> = (props) => {
+export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEditorProps) => {
   const { options, onOptionsChange } = props;
   const { jsonData, secureJsonFields, secureJsonData } = options;
 

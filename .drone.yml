@@ -1,0 +1,35 @@
+---
+# This file must be signed. You can do so with the command `drone --server https://drone.grafana.net sign --save grafana/grafana-google-sdk-react`
+
+kind: pipeline
+type: docker
+name:
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: initialize
+    image: grafana/grafana-plugin-ci:1.2.1-alpine
+    commands:
+      - mkdir -p bin
+      - curl -fL -o bin/grabpl https://grafana-downloads.storage.googleapis.com/grafana-build-pipeline/v0.5.27/grabpl
+      - chmod +x bin/grabpl
+      - mkdir ci
+      - yarn install --frozen-lockfile --no-progress
+      - rm -rf node_modules/@grafana/data/node_modules
+
+  - name: build-and-test-frontend
+    image: grafana/grafana-plugin-ci:1.2.1-alpine
+    commands:
+      - yarn eslint ./src --ext .js,.jsx,.ts,.tsx
+      - yarn build
+      - yarn test-ci
+    depends_on:
+      - initialize
+---
+kind: signature
+hmac: 8220b5c90a5c64835fe5f958c905543cd4682e861be031e8bda27a559b6fdd1c
+
+...

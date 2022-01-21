@@ -8,7 +8,7 @@ interface JWTFormProps {
   onReset: () => void;
   onChange: (key: keyof DataSourceOptions) => (e: React.SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
-export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onChange }) => {
+export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onChange }: JWTFormProps) => {
   return (
     <div data-testid={TEST_IDS.jwtForm}>
       <Field label="Project ID">

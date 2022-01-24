@@ -9,6 +9,7 @@ interface JWTFormProps {
   onChange: (key: keyof DataSourceOptions) => (e: React.SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onChange }: JWTFormProps) => {
+  const onResetPress = () => onReset();
   return (
     <div data-testid={TEST_IDS.jwtForm}>
       <Field label="Project ID">
@@ -40,7 +41,7 @@ export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onChange }: 
           placeholder="Private key configured"
           addonAfter={
             <Tooltip content="Click to clear the uploaded JWT token and upload a new one">
-              <Button data-testid={TEST_IDS.resetJwtButton} icon="sync" size="xs" onClick={onReset} fill="outline">
+              <Button data-testid={TEST_IDS.resetJwtButton} icon="sync" size="xs" onClick={onResetPress} fill="outline">
                 Reset token
               </Button>
             </Tooltip>

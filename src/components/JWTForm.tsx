@@ -5,11 +5,11 @@ import { TEST_IDS } from '../testIds';
 
 interface JWTFormProps {
   options: DataSourceOptions;
-  onReset: () => void;
+  onReset: (a: null) => void;
   onChange: (key: keyof DataSourceOptions) => (e: React.SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onChange }: JWTFormProps) => {
-  const onResetPress = () => onReset();
+  const onResetPress = () => onReset(null);
   return (
     <div data-testid={TEST_IDS.jwtForm}>
       <Field label="Project ID">

@@ -21,7 +21,10 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEdito
   const isJWT = jsonData.authenticationType === GoogleAuthType.JWT || jsonData.authenticationType === undefined;
 
   const onAuthTypeChange = (authenticationType: GoogleAuthType) => {
-    onResetApiKey({ authenticationType });
+    onOptionsChange({
+      ...options,
+      jsonData: { ...options.jsonData, authenticationType },
+    });
   };
 
   const hasJWTConfigured = Boolean(

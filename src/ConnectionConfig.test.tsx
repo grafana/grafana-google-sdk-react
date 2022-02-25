@@ -153,13 +153,14 @@ describe('ConnectionConfig', () => {
     expect(screen.queryByTestId(TEST_IDS.dropZone)).not.toBeInTheDocument();
   });
 
-  it('resets service account credentials when changing auth type', () => {
+  it('preserves service account credentials when changing auth type', () => {
     const onOptionsChangeSpy = jest.fn();
 
     const { getByLabelText } = render(
       <ConnectionConfig
         options={
           ({
+            secureJsonData: {},
             jsonData: {
               authenticationType: GoogleAuthType.JWT,
               clientEmail: 'test@grafana.com',
@@ -176,7 +177,12 @@ describe('ConnectionConfig', () => {
     fireEvent.click(gceAuthButton);
 
     expect(onOptionsChangeSpy).toHaveBeenCalledWith({
-      jsonData: { authenticationType: GoogleAuthType.GCE },
+      jsonData: {
+        authenticationType: GoogleAuthType.GCE,
+        clientEmail: 'test@grafana.com',
+        defaultProject: 'test-project',
+        tokenUri: 'https://accounts.google.com/o/oauth2/token',
+      },
       secureJsonData: {},
     });
   });

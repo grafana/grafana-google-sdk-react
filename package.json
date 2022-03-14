@@ -1,6 +1,6 @@
 {
   "name": "@grafana/google-sdk",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Common Google features for grafana",
   "main": "dist/index.js",
   "scripts": {

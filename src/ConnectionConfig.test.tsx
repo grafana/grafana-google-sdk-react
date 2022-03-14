@@ -19,6 +19,17 @@ const TOKEN_MOCK = `{
 }
 `;
 
+const makeJsonData: (
+  authenticationType?: GoogleAuthType
+) => DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>['jsonData'] = (
+  authenticationType = GoogleAuthType.JWT
+) => ({
+  authenticationType,
+  clientEmail: 'test@grafana.com',
+  tokenUri: 'https://accounts.google.com/o/oauth2/token',
+  defaultProject: 'test-project',
+});
+
 describe('ConnectionConfig', () => {
   it('renders help box', () => {
     render(
@@ -96,15 +107,12 @@ describe('ConnectionConfig', () => {
   });
 
   it('renders drop zone on JWT token reset', () => {
+    const jsonData = makeJsonData();
     const { getByTestId } = render(
       <WrapInState
         defaultOptions={
           ({
-            jsonData: {
-              clientEmail: 'test@grafana.com',
-              tokenUri: 'https://accounts.google.com/o/oauth2/token',
-              defaultProject: 'test-project',
-            },
+            jsonData,
             secureJsonFields: {
               privateKey: true,
             },
@@ -130,15 +138,12 @@ describe('ConnectionConfig', () => {
   });
 
   it('renders JWT form when data is provided', () => {
+    const jsonData = makeJsonData();
     render(
       <ConnectionConfig
         options={
           ({
-            jsonData: {
-              clientEmail: 'test@grafana.com',
-              tokenUri: 'https://accounts.google.com/o/oauth2/token',
-              defaultProject: 'test-project',
-            },
+            jsonData,
             secureJsonFields: {
               privateKey: true,
             },
@@ -153,19 +158,17 @@ describe('ConnectionConfig', () => {
     expect(screen.queryByTestId(TEST_IDS.dropZone)).not.toBeInTheDocument();
   });
 
-  it('resets service account credentials when changing auth type', () => {
+  it('preserves service account credentials when changing auth type', () => {
     const onOptionsChangeSpy = jest.fn();
+    const jsonData = makeJsonData();
+    const expectedJsonData = makeJsonData(GoogleAuthType.GCE);
 
     const { getByLabelText } = render(
       <ConnectionConfig
         options={
           ({
-            jsonData: {
-              authenticationType: GoogleAuthType.JWT,
-              clientEmail: 'test@grafana.com',
-              tokenUri: 'https://accounts.google.com/o/oauth2/token',
-              defaultProject: 'test-project',
-            },
+            secureJsonData: {},
+            jsonData,
           } as unknown) as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
         onOptionsChange={onOptionsChangeSpy}
@@ -176,7 +179,7 @@ describe('ConnectionConfig', () => {
     fireEvent.click(gceAuthButton);
 
     expect(onOptionsChangeSpy).toHaveBeenCalledWith({
-      jsonData: { authenticationType: GoogleAuthType.GCE },
+      jsonData: expectedJsonData,
       secureJsonData: {},
     });
   });

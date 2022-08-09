@@ -10,6 +10,7 @@ export interface DataSourceOptions extends DataSourceJsonData {
   tokenUri?: string;
   clientEmail?: string;
   defaultProject?: string;
+  gceDefaultProject?: string;
 }
 
 export interface DataSourceSecureJsonData {

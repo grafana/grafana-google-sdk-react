@@ -1,18 +1,20 @@
 import { DataSourcePluginOptionsEditorProps, onUpdateDatasourceJsonDataOption } from '@grafana/data';
 import { Alert, Field, FieldSet, RadioButtonGroup } from '@grafana/ui';
+import { BackendSrv } from '@grafana/runtime'
 
-import React from 'react';
+import React, { useState } from 'react';
 import { TEST_IDS } from 'testIds';
 import { JWTConfigEditor } from './components/JWTConfigEditor';
 import { JWTForm } from './components/JWTForm';
 import { GOOGLE_AUTH_TYPE_OPTIONS } from './constants';
 import { DataSourceOptions, DataSourceSecureJsonData, GoogleAuthType } from './types';
 
-export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<DataSourceOptions, DataSourceSecureJsonData>;
+export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<DataSourceOptions, DataSourceSecureJsonData> & { backendSrv?: BackendSrv };
 
 export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEditorProps) => {
   const { options, onOptionsChange } = props;
   const { jsonData, secureJsonFields, secureJsonData } = options;
+  const [error, setError] = useState<string | undefined>(undefined)
 
   if (!jsonData.authenticationType) {
     jsonData.authenticationType = GoogleAuthType.JWT;
@@ -20,19 +22,27 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEdito
 
   const isJWT = jsonData.authenticationType === GoogleAuthType.JWT || jsonData.authenticationType === undefined;
 
-  const onAuthTypeChange = (authenticationType: GoogleAuthType) => {
+  const onAuthTypeChange = async (authenticationType: GoogleAuthType) => {
+    let gceDefaultProject = jsonData.gceDefaultProject
+    try {
+      if (authenticationType === 'gce' && !gceDefaultProject) {
+        gceDefaultProject = await props.backendSrv.get(`/api/datasources/${props.options.id}/resources/gceDefaultProject`)
+      }
+    } catch (err) {
+      setError(err.data.message)
+    }
     onOptionsChange({
       ...options,
-      jsonData: { ...options.jsonData, authenticationType },
+      jsonData: { ...options.jsonData, authenticationType, gceDefaultProject },
     });
   };
 
   const hasJWTConfigured = Boolean(
     secureJsonFields &&
-      secureJsonFields.privateKey &&
-      jsonData.clientEmail &&
-      jsonData.defaultProject &&
-      jsonData.tokenUri
+    secureJsonFields.privateKey &&
+    jsonData.clientEmail &&
+    jsonData.defaultProject &&
+    jsonData.tokenUri
   );
 
   const onResetApiKey = (jsonData?: Partial<DataSourceOptions>) => {
@@ -109,6 +119,10 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEdito
           Verify GCE default service account by clicking Save & Test
         </Alert>
       )}
+      {error !== undefined && (
+        <Alert title="Error retrieving default project" severity="error">
+          {error}
+        </Alert>)}
     </>
   );
 };

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.0.4
+
+- Retrieve default project when GCE Service Account authentication is used.
+
 ## v0.0.3
 
 - Fix: preserve JWT details when switching auth type

@@ -1,6 +1,6 @@
 {
   "name": "@grafana/google-sdk",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Common Google features for grafana",
   "main": "dist/index.js",
   "scripts": {
@@ -23,6 +23,7 @@
   "dependencies": {},
   "devDependencies": {
     "@grafana/data": "^8.2.1",
+    "@grafana/runtime": "8.4.0-pre",
     "@grafana/toolkit": "^8.3.4",
     "@grafana/ui": "^8.2.1",
     "@rollup/plugin-commonjs": "^21.0.1",

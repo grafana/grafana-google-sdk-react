@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { DataSourceSettings } from '@grafana/data';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
+
 import { ConnectionConfig } from './ConnectionConfig';
 import { DataSourceOptions, DataSourceSecureJsonData, GoogleAuthType } from './types';
 import { TEST_IDS } from './testIds';
+import { BackendSrv } from '@grafana/runtime';
 
 const TOKEN_MOCK = `{
   "type": "service_account",
@@ -28,7 +30,19 @@ const makeJsonData: (
   clientEmail: 'test@grafana.com',
   tokenUri: 'https://accounts.google.com/o/oauth2/token',
   defaultProject: 'test-project',
+  gceDefaultProject: 'test-project'
 });
+
+const backendSrv: BackendSrv = {
+  delete: jest.fn(),
+  patch: jest.fn(),
+  post: jest.fn(),
+  fetch: jest.fn(),
+  put: jest.fn(),
+  request: jest.fn(),
+  datasourceRequest: jest.fn(),
+  get: jest.fn().mockResolvedValue('test-project')
+}
 
 describe('ConnectionConfig', () => {
   it('renders help box', () => {
@@ -39,7 +53,8 @@ describe('ConnectionConfig', () => {
             jsonData: {},
           } as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
-        onOptionsChange={() => {}}
+        onOptionsChange={() => { }}
+        backendSrv={backendSrv}
       />
     );
 
@@ -54,7 +69,8 @@ describe('ConnectionConfig', () => {
             jsonData: {},
           } as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
-        onOptionsChange={() => {}}
+        onOptionsChange={() => { }}
+        backendSrv={backendSrv}
       />
     );
 
@@ -69,7 +85,8 @@ describe('ConnectionConfig', () => {
             jsonData: {},
           } as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
-        onOptionsChange={() => {}}
+        onOptionsChange={() => { }}
+        backendSrv={backendSrv}
       />
     );
     const pasteButton = getByTestId(TEST_IDS.pasteJwtButton);
@@ -89,7 +106,7 @@ describe('ConnectionConfig', () => {
         }
       >
         {({ options, setOptions }) => {
-          return <ConnectionConfig options={options} onOptionsChange={setOptions} />;
+          return <ConnectionConfig options={options} onOptionsChange={setOptions} backendSrv={backendSrv} />;
         }}
       </WrapInState>
     );
@@ -120,7 +137,7 @@ describe('ConnectionConfig', () => {
         }
       >
         {({ options, setOptions }) => {
-          return <ConnectionConfig options={options} onOptionsChange={setOptions} />;
+          return <ConnectionConfig options={options} onOptionsChange={setOptions} backendSrv={backendSrv} />;
         }}
       </WrapInState>
     );
@@ -149,7 +166,8 @@ describe('ConnectionConfig', () => {
             },
           } as unknown) as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
-        onOptionsChange={() => {}}
+        onOptionsChange={() => { }}
+        backendSrv={backendSrv}
       />
     );
 
@@ -172,6 +190,7 @@ describe('ConnectionConfig', () => {
           } as unknown) as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
         onOptionsChange={onOptionsChangeSpy}
+        backendSrv={backendSrv}
       />
     );
 
@@ -183,6 +202,31 @@ describe('ConnectionConfig', () => {
       secureJsonData: {},
     });
   });
+});
+
+it('will render an error when failing to retrieve default GCE project', async () => {
+  const backendSrvMock = backendSrv
+  const jsonData = makeJsonData()
+  jsonData.gceDefaultProject = undefined
+
+  backendSrvMock.get = jest.fn().mockRejectedValueOnce({ data: { message: 'Failed to retrieve default GCE project' } })
+  const { getByLabelText } = render(
+    <ConnectionConfig
+      options={
+        ({
+          secureJsonData: {},
+          jsonData,
+        } as unknown) as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
+      }
+      onOptionsChange={() => { }}
+      backendSrv={backendSrv}
+    />
+  );
+
+
+  const gceAuthButton = getByLabelText(TEST_IDS.authTypeButtonGCE);
+  act(() => { fireEvent.click(gceAuthButton) });
+  await waitFor(() => screen.getByText('Failed to retrieve default GCE project'))
 });
 
 interface WrapInStateChildrenProps {

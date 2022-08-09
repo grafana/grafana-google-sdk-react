@@ -30,7 +30,7 @@ const makeJsonData: (
   clientEmail: 'test@grafana.com',
   tokenUri: 'https://accounts.google.com/o/oauth2/token',
   defaultProject: 'test-project',
-  gceDefaultProject: 'test-project'
+  gceDefaultProject: 'test-project',
 });
 
 const backendSrv: BackendSrv = {
@@ -41,8 +41,8 @@ const backendSrv: BackendSrv = {
   put: jest.fn(),
   request: jest.fn(),
   datasourceRequest: jest.fn(),
-  get: jest.fn().mockResolvedValue('test-project')
-}
+  get: jest.fn().mockResolvedValue('test-project'),
+};
 
 describe('ConnectionConfig', () => {
   it('renders help box', () => {
@@ -53,7 +53,7 @@ describe('ConnectionConfig', () => {
             jsonData: {},
           } as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
-        onOptionsChange={() => { }}
+        onOptionsChange={() => {}}
         backendSrv={backendSrv}
       />
     );
@@ -69,7 +69,7 @@ describe('ConnectionConfig', () => {
             jsonData: {},
           } as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
-        onOptionsChange={() => { }}
+        onOptionsChange={() => {}}
         backendSrv={backendSrv}
       />
     );
@@ -85,7 +85,7 @@ describe('ConnectionConfig', () => {
             jsonData: {},
           } as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
-        onOptionsChange={() => { }}
+        onOptionsChange={() => {}}
         backendSrv={backendSrv}
       />
     );
@@ -166,7 +166,7 @@ describe('ConnectionConfig', () => {
             },
           } as unknown) as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
-        onOptionsChange={() => { }}
+        onOptionsChange={() => {}}
         backendSrv={backendSrv}
       />
     );
@@ -205,11 +205,11 @@ describe('ConnectionConfig', () => {
 });
 
 it('will render an error when failing to retrieve default GCE project', async () => {
-  const backendSrvMock = backendSrv
-  const jsonData = makeJsonData()
-  jsonData.gceDefaultProject = undefined
+  const backendSrvMock = backendSrv;
+  const jsonData = makeJsonData();
+  jsonData.gceDefaultProject = undefined;
 
-  backendSrvMock.get = jest.fn().mockRejectedValueOnce({ data: { message: 'Failed to retrieve default GCE project' } })
+  backendSrvMock.get = jest.fn().mockRejectedValueOnce({ data: { message: 'Failed to retrieve default GCE project' } });
   const { getByLabelText } = render(
     <ConnectionConfig
       options={
@@ -218,15 +218,16 @@ it('will render an error when failing to retrieve default GCE project', async ()
           jsonData,
         } as unknown) as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
       }
-      onOptionsChange={() => { }}
+      onOptionsChange={() => {}}
       backendSrv={backendSrv}
     />
   );
 
-
   const gceAuthButton = getByLabelText(TEST_IDS.authTypeButtonGCE);
-  act(() => { fireEvent.click(gceAuthButton) });
-  await waitFor(() => screen.getByText('Failed to retrieve default GCE project'))
+  act(() => {
+    fireEvent.click(gceAuthButton);
+  });
+  await waitFor(() => screen.getByText('Failed to retrieve default GCE project'));
 });
 
 interface WrapInStateChildrenProps {

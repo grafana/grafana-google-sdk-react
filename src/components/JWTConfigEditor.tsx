@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { isObject } from 'lodash';
-import { FileDropzone, TextArea, LinkButton, useTheme2, Field, Button } from '@grafana/ui';
+import { FileDropzone, TextArea, useTheme2, Field, Button } from '@grafana/ui';
 import { TEST_IDS } from '../testIds';
 
 const configKeys = ['private_key', 'token_uri', 'client_email', 'project_id'];
@@ -84,7 +84,7 @@ export const JWTConfigEditor: React.FC<Props> = ({ onChange }: Props) => {
                   Drop the Google JWT file here
                   <br />
                   <br />
-                  <LinkButton fill="outline">Click to browse files</LinkButton>
+                  <Button fill="outline">Click to browse files</Button>
                 </p>
               </FileDropzone>
             </div>

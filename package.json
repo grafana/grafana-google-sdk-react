@@ -17,7 +17,7 @@
     "dist"
   ],
   "repository": "github:grafana/grafana-google-sdk-react",
-  "author": "Grafana Labs <team@grafana.com> (https://grafanap.com)",
+  "author": "Grafana Labs <team@grafana.com> (https://grafana.com)",
   "license": "Apache-2.0",
   "dependencies": {},
   "devDependencies": {

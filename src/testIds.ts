@@ -7,4 +7,9 @@ export const TEST_IDS = {
   jwtForm: 'JWT form',
   authTypeButtonJWT: 'JWT button',
   authTypeButtonGCE: 'GCE button',
+  privateKeyPathInput: 'Private Key Path Input',
+  privateKeyInput: 'Private Key Input',
+  fillJwtManuallyButton: 'Fill JWT info manually',
+  linkPrivateKeyPath: 'Show private key path input',
+  linkPrivateKey: 'Show private key input',
 };

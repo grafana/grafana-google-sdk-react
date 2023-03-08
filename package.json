@@ -2,7 +2,8 @@
   "name": "@grafana/google-sdk",
   "version": "0.0.4",
   "description": "Common Google features for grafana",
-  "main": "dist/index.js",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "watch 'npm run bundle' ./src",
     "build": "yarn clean && yarn typecheck && yarn bundle",
@@ -19,11 +20,16 @@
   "repository": "github:grafana/grafana-google-sdk-react",
   "author": "Grafana Labs <team@grafana.com> (https://grafana.com)",
   "license": "Apache-2.0",
-  "dependencies": {},
+  "dependencies": {
+    "@grafana/data": "9.4.1",
+    "@grafana/ui": "9.4.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
+  },
   "devDependencies": {
-    "@grafana/data": "^8.2.1",
-    "@grafana/toolkit": "^8.3.4",
-    "@grafana/ui": "^8.2.1",
+    "@grafana/eslint-config": "^5.1.0",
+    "@grafana/toolkit": "9.4.1",
+    "@grafana/tsconfig": "^1.2.0-rc1",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.1.1",
     "@testing-library/jest-dom": "^5.14.1",

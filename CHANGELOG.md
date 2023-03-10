@@ -2,9 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.1.0
+
+- Export AuthConfig.tsx that can be reused without the infobox
+- JWTForm can now take private key path instead of private key // You need to handle it in the backend
+- GoogleAuthType is now a const instead of enum type
+- Bump grafana packages to 9.4.1
+
 ## v0.0.4
 
-- Fix: make JWT file input accessible via keyboard 
+- Fix: make JWT file input accessible via keyboard
 
 ## v0.0.3
 

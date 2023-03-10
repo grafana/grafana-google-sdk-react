@@ -1,19 +1,20 @@
-import React, { useState, useCallback } from 'react';
+import { Button, Field, FileDropzone, TextArea, useTheme2 } from '@grafana/ui';
 import { isObject } from 'lodash';
-import { FileDropzone, TextArea, useTheme2, Field, Button } from '@grafana/ui';
+import React, { useCallback, useState } from 'react';
 import { TEST_IDS } from '../testIds';
 
 const configKeys = ['private_key', 'token_uri', 'client_email', 'project_id'];
 type JWTConfigKeys = 'privateKey' | 'tokenUri' | 'clientEmail' | 'projectId';
 type JWTConfigDTO = Record<JWTConfigKeys, string>;
 
-export interface Props {
+export interface JWTConfigEditorProps {
   onChange: (config: JWTConfigDTO) => void;
+  showConfigEditor: () => void;
 }
 
 const INVALID_JWT_TOKEN_ERROR = 'Invalid JWT token';
 
-export const JWTConfigEditor: React.FC<Props> = ({ onChange }: Props) => {
+export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, showConfigEditor }) => {
   const [error, setError] = useState<string | null>();
   const [isPasting, setIsPasting] = useState<boolean | null>(null);
   const theme = useTheme2();
@@ -47,6 +48,7 @@ export const JWTConfigEditor: React.FC<Props> = ({ onChange }: Props) => {
         const validation = validateJWT(jwt);
 
         if (validation.isValid) {
+          showConfigEditor();
           onChange({
             privateKey: jwt.private_key,
             tokenUri: jwt.token_uri,
@@ -58,7 +60,7 @@ export const JWTConfigEditor: React.FC<Props> = ({ onChange }: Props) => {
         }
       }
     },
-    [setError, onChange]
+    [setError, onChange, showConfigEditor]
   );
 
   return (
@@ -72,26 +74,28 @@ export const JWTConfigEditor: React.FC<Props> = ({ onChange }: Props) => {
         <>
           {isPasting !== true && (
             <div data-testid={TEST_IDS.dropZone}>
-              <FileDropzone
-                options={{ multiple: false, accept: 'application/json' }}
-                readAs="readAsText"
-                onLoad={(result) => {
-                  readAndValidateJWT(result as string);
-                  setIsPasting(false);
-                }}
-              >
-                <p style={{ margin: 0, fontSize: `${theme.typography.h4.fontSize}`, textAlign: 'center' }}>
-                  Drop the Google JWT file here
-                  <br />
-                  <br />
-                  <Button fill="outline">Click to browse files</Button>
-                </p>
-              </FileDropzone>
+              {/* Backward compatibility check. FileDropzone added in 8.1 */}
+              {FileDropzone && (
+                <FileDropzone
+                  options={{ multiple: false, accept: '.json' }}
+                  readAs="readAsText"
+                  onLoad={(result) => {
+                    readAndValidateJWT(result as string);
+                    setIsPasting(false);
+                  }}
+                >
+                  <p style={{ margin: 0, fontSize: `${theme.typography.h4.fontSize}`, textAlign: 'center' }}>
+                    Drop the Google JWT file here
+                    <br />
+                    <br />
+                    <Button fill="outline">Click to browse files</Button>
+                  </p>
+                </FileDropzone>
+              )}
             </div>
           )}
 
           {isPasting && (
-            // @ts-ignore
             <TextArea
               data-testid={TEST_IDS.pasteArea}
               autoFocus
@@ -105,7 +109,7 @@ export const JWTConfigEditor: React.FC<Props> = ({ onChange }: Props) => {
       </Field>
 
       {!isPasting && (
-        <Field>
+        <>
           <Button
             data-testid={TEST_IDS.pasteJwtButton}
             type="button"
@@ -115,7 +119,17 @@ export const JWTConfigEditor: React.FC<Props> = ({ onChange }: Props) => {
           >
             Paste JWT Token
           </Button>
-        </Field>
+          <span style={{ paddingRight: '10px', paddingLeft: '10px' }}>or</span>
+          <Button
+            data-testid={TEST_IDS.fillJwtManuallyButton}
+            type="button"
+            fill="outline"
+            style={{ color: `${theme.colors.primary.text}` }}
+            onClick={showConfigEditor}
+          >
+            Fill In JWT Token manually
+          </Button>
+        </>
       )}
 
       {isPasting && error && (

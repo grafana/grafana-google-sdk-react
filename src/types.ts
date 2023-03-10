@@ -1,15 +1,16 @@
 import { DataSourceJsonData } from '@grafana/data';
 
-export enum GoogleAuthType {
-  JWT = 'jwt',
-  GCE = 'gce',
-}
+export const GoogleAuthType = {
+  JWT: 'jwt',
+  GCE: 'gce',
+} as const;
 
 export interface DataSourceOptions extends DataSourceJsonData {
-  authenticationType: GoogleAuthType;
+  authenticationType: string;
   tokenUri?: string;
   clientEmail?: string;
   defaultProject?: string;
+  privateKeyPath?: string;
 }
 
 export interface DataSourceSecureJsonData {

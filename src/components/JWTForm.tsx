@@ -1,53 +1,129 @@
+import {
+  DataSourceSettings,
+  onUpdateDatasourceJsonDataOption,
+  onUpdateDatasourceSecureJsonDataOption,
+} from '@grafana/data';
+import { Field, Input, LegacyForms, SecretInput } from '@grafana/ui';
 import React from 'react';
-import { Button, Field, Input, Tooltip } from '@grafana/ui';
-import { DataSourceOptions } from '../types';
 import { TEST_IDS } from '../testIds';
+import { DataSourceOptions, DataSourceSecureJsonData } from '../types';
 
-interface JWTFormProps {
-  options: DataSourceOptions;
-  onReset: (a: null) => void;
-  onChange: (key: keyof DataSourceOptions) => (e: React.SyntheticEvent<HTMLInputElement | HTMLSelectElement>) => void;
+const { SecretFormField } = LegacyForms;
+
+export interface JWTFormProps {
+  onReset: () => void;
+  options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>;
+  onOptionsChange: (options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>) => void;
 }
-export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onChange }: JWTFormProps) => {
-  const onResetPress = () => onReset(null);
+
+enum PrivateKeyConfig {
+  PATH = 'path',
+  JWT = 'jwt',
+}
+
+const getInitialPrivateKeyConfig = (options: DataSourceOptions): PrivateKeyConfig => {
+  return 'privateKeyPath' in options && options.privateKeyPath !== '' ? PrivateKeyConfig.PATH : PrivateKeyConfig.JWT;
+};
+
+export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onOptionsChange }) => {
+  const [privateKeyConfig, setPrivateKeyConfig] = React.useState<PrivateKeyConfig>(
+    getInitialPrivateKeyConfig(options.jsonData)
+  );
+  const onJWTFormChange = (key: keyof DataSourceOptions) =>
+    onUpdateDatasourceJsonDataOption({ options, onOptionsChange }, key);
+
+  const togglePrivateKeyFields = (): void => {
+    if (privateKeyConfig === PrivateKeyConfig.JWT) {
+      setPrivateKeyConfig(PrivateKeyConfig.PATH);
+    } else {
+      setPrivateKeyConfig(PrivateKeyConfig.JWT);
+    }
+  };
+
+  const Description = (
+    <span>
+      {privateKeyConfig === PrivateKeyConfig.PATH ? (
+        <a className="external-link" onClick={togglePrivateKeyFields} data-testid={TEST_IDS.linkPrivateKey}>
+          Paste private key
+        </a>
+      ) : (
+        'Paste private key'
+      )}{' '}
+      or &nbsp;
+      {privateKeyConfig === PrivateKeyConfig.JWT ? (
+        <a className="external-link" onClick={togglePrivateKeyFields} data-testid={TEST_IDS.linkPrivateKeyPath}>
+          provide path to private file
+        </a>
+      ) : (
+        'provide path to private key file'
+      )}
+    </span>
+  );
+
+  const privateKeyProps = {
+    isConfigured: Boolean(options.secureJsonFields.privateKey),
+    value: options.secureJsonData?.privateKey || '',
+    placeholder: 'Enter Private key',
+    onReset: () => onReset(),
+    // Note: React might escape newline characters like this \\n so we need to handle that somewhere.
+    onChange: onUpdateDatasourceSecureJsonDataOption({ options, onOptionsChange }, 'privateKey'),
+    ['data-testid']: TEST_IDS.privateKeyInput,
+  };
+
   return (
     <div data-testid={TEST_IDS.jwtForm}>
       <Field label="Project ID">
-        {/* @ts-ignore */}
         <Input
           id="defaultProject"
           width={60}
-          value={options.defaultProject || ''}
-          onChange={onChange('defaultProject')}
+          value={options.jsonData.defaultProject || ''}
+          onChange={onJWTFormChange('defaultProject')}
         />
       </Field>
 
       <Field label="Client email">
-        {/* @ts-ignore */}
-        <Input width={60} id="clientEmail" value={options.clientEmail || ''} onChange={onChange('clientEmail')} />
+        <Input
+          width={60}
+          id="clientEmail"
+          value={options.jsonData.clientEmail || ''}
+          onChange={onJWTFormChange('clientEmail')}
+        />
       </Field>
 
       <Field label="Token URI">
-        {/* @ts-ignore */}
-        <Input width={60} id="tokenUri" value={options.tokenUri || ''} onChange={onChange('tokenUri')} />
-      </Field>
-
-      <Field label="Private key" disabled>
-        {/* @ts-ignore */}
         <Input
           width={60}
-          id="privateKey"
-          readOnly
-          placeholder="Private key configured"
-          addonAfter={
-            <Tooltip content="Click to clear the uploaded JWT token and upload a new one">
-              <Button data-testid={TEST_IDS.resetJwtButton} icon="sync" size="xs" onClick={onResetPress} fill="outline">
-                Reset token
-              </Button>
-            </Tooltip>
-          }
+          id="tokenUri"
+          value={options.jsonData.tokenUri || ''}
+          onChange={onJWTFormChange('tokenUri')}
         />
       </Field>
+
+      {privateKeyConfig === PrivateKeyConfig.PATH && (
+        <Field label="Private key path" description={Description}>
+          <Input
+            width={60}
+            id="privateKeyPath"
+            value={options.jsonData.privateKeyPath || ''}
+            placeholder="File location of your private key (e.g. /etc/secrets/gce.pem)"
+            onChange={onJWTFormChange('privateKeyPath')}
+            data-testid={TEST_IDS.privateKeyPathInput}
+          />
+        </Field>
+      )}
+
+      {privateKeyConfig === PrivateKeyConfig.JWT && (
+        <>
+          {/* Backward compatibility check. SecretInput was added in 8.5 */}
+          {!!SecretInput ? (
+            <Field label="Private key" description={Description}>
+              <SecretInput {...privateKeyProps} width={60} />
+            </Field>
+          ) : (
+            <SecretFormField {...privateKeyProps} label="Private key" labelWidth={10} inputWidth={20} />
+          )}
+        </>
+      )}
     </div>
   );
 };

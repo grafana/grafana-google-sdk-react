@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.1.1
+
+- Move grafana dependencies to peerDependencies
+- Remove GitHub package release
+
 ## v0.1.0
 
 - Export AuthConfig.tsx that can be reused without the infobox

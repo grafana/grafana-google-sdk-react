@@ -1,6 +1,6 @@
 {
   "name": "@grafana/google-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Common Google features for grafana",
   "main": "index.js",
   "types": "dist/index.d.ts",
@@ -20,19 +20,23 @@
   "repository": "github:grafana/grafana-google-sdk-react",
   "author": "Grafana Labs <team@grafana.com> (https://grafana.com)",
   "license": "Apache-2.0",
-  "dependencies": {
+  "peerDependencies": {
     "@grafana/data": "9.4.1",
     "@grafana/ui": "9.4.1",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@grafana/data": "9.4.1",
     "@grafana/toolkit": "9.4.1",
+    "@grafana/ui": "9.4.1",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.1.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.2",
     "@types/lodash": "^4.14.178",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.61.1",
     "rollup-plugin-terser": "^7.0.2",

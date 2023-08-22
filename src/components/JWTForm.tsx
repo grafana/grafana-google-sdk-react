@@ -3,7 +3,7 @@ import {
   onUpdateDatasourceJsonDataOption,
   onUpdateDatasourceSecureJsonDataOption,
 } from '@grafana/data';
-import { Field, Input, LegacyForms, SecretInput } from '@grafana/ui';
+import { Button, Field, Input, LegacyForms, SecretInput, useTheme2 } from '@grafana/ui';
 import React from 'react';
 import { TEST_IDS } from '../testIds';
 import { DataSourceOptions, DataSourceSecureJsonData } from '../types';
@@ -14,6 +14,7 @@ export interface JWTFormProps {
   onReset: () => void;
   options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>;
   onOptionsChange: (options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>) => void;
+  hideConfigEditor: () => void;
 }
 
 enum PrivateKeyConfig {
@@ -25,7 +26,7 @@ const getInitialPrivateKeyConfig = (options: DataSourceOptions): PrivateKeyConfi
   return 'privateKeyPath' in options && options.privateKeyPath !== '' ? PrivateKeyConfig.PATH : PrivateKeyConfig.JWT;
 };
 
-export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onOptionsChange }) => {
+export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onOptionsChange, hideConfigEditor }) => {
   const [privateKeyConfig, setPrivateKeyConfig] = React.useState<PrivateKeyConfig>(
     getInitialPrivateKeyConfig(options.jsonData)
   );
@@ -39,6 +40,7 @@ export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onOptionsCha
       setPrivateKeyConfig(PrivateKeyConfig.JWT);
     }
   };
+  const theme = useTheme2();
 
   const Description = (
     <span>
@@ -124,6 +126,30 @@ export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onOptionsCha
           )}
         </>
       )}
+
+      {
+        <>
+          <Button
+            data-testid={TEST_IDS.pasteJwtButton}
+            type="button"
+            fill="outline"
+            style={{ color: `${theme.colors.primary.text}` }}
+            onClick={hideConfigEditor}
+          >
+            Paste JWT Token
+          </Button>
+          <span style={{ paddingRight: '10px', paddingLeft: '10px' }}>or</span>
+          <Button
+            data-testid={TEST_IDS.uploadJwtButton}
+            type="button"
+            fill="outline"
+            style={{ color: `${theme.colors.primary.text}` }}
+            onClick={hideConfigEditor}
+          >
+            Upload JWT Token
+          </Button>
+        </>
+      }
     </div>
   );
 };

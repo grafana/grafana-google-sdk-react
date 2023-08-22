@@ -77,13 +77,15 @@ describe('ConnectionConfig', () => {
 
     expect(screen.queryByTestId(TEST_IDS.pasteArea)).toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.dropZone)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.uploadJwtButton)).toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.fillJwtManuallyButton)).toBeInTheDocument();
   });
 
   it('renders private key path input when link is clicked', () => {
     const { getByTestId } = render(
       <WrapInState
         defaultOptions={
-          ({
+          {
             jsonData: {
               clientEmail: 'test@grafana.com',
               tokenUri: 'https://accounts.google.com/o/oauth2/token',
@@ -92,7 +94,7 @@ describe('ConnectionConfig', () => {
             secureJsonFields: {
               privateKey: true,
             },
-          } as unknown) as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
+          } as unknown as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
       >
         {({ options, setOptions }) => {
@@ -108,6 +110,8 @@ describe('ConnectionConfig', () => {
 
     expect(screen.queryByTestId(TEST_IDS.privateKeyInput)).not.toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.privateKeyPathInput)).toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.uploadJwtButton)).toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.pasteJwtButton)).toBeInTheDocument();
   });
 
   it('renders JWT form when token is pasted', () => {
@@ -193,7 +197,7 @@ describe('ConnectionConfig', () => {
     render(
       <ConnectionConfig
         options={
-          ({
+          {
             jsonData: {
               clientEmail: 'test@grafana.com',
               tokenUri: 'https://accounts.google.com/o/oauth2/token',
@@ -202,7 +206,7 @@ describe('ConnectionConfig', () => {
             secureJsonFields: {
               privateKey: true,
             },
-          } as unknown) as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
+          } as unknown as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
         onOptionsChange={() => {}}
       />
@@ -219,7 +223,7 @@ describe('ConnectionConfig', () => {
     render(
       <ConnectionConfig
         options={
-          ({
+          {
             jsonData: {
               clientEmail: 'test@grafana.com',
               tokenUri: 'https://accounts.google.com/o/oauth2/token',
@@ -227,7 +231,7 @@ describe('ConnectionConfig', () => {
               privateKeyPath: 'private/key/path',
             },
             secureJsonFields: {},
-          } as unknown) as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
+          } as unknown as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
         onOptionsChange={() => {}}
       />

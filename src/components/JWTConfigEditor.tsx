@@ -17,12 +17,14 @@ const INVALID_JWT_TOKEN_ERROR = 'Invalid JWT token';
 export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, showConfigEditor }) => {
   const [error, setError] = useState<string | null>();
   const [isPasting, setIsPasting] = useState<boolean | null>(null);
+  const [isUploading, setIsUploading] = useState<boolean>(true);
   const theme = useTheme2();
 
   const onPasteClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>(
     (e) => {
       setError(null);
       setIsPasting(true);
+      setIsUploading(false);
     },
     [setIsPasting]
   );
@@ -72,7 +74,7 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, show
         error={error}
       >
         <>
-          {isPasting !== true && (
+          {isUploading && (
             <div data-testid={TEST_IDS.dropZone}>
               {/* Backward compatibility check. FileDropzone added in 8.1 */}
               {FileDropzone && (
@@ -120,17 +122,34 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, show
             Paste JWT Token
           </Button>
           <span style={{ paddingRight: '10px', paddingLeft: '10px' }}>or</span>
+        </>
+      )}
+      {isPasting && (
+        <>
           <Button
-            data-testid={TEST_IDS.fillJwtManuallyButton}
+            data-testid={TEST_IDS.uploadJwtButton}
             type="button"
             fill="outline"
             style={{ color: `${theme.colors.primary.text}` }}
-            onClick={showConfigEditor}
+            onClick={() => {
+              setIsUploading(true);
+              setIsPasting(false);
+            }}
           >
-            Fill In JWT Token manually
+            Upload JWT Token
           </Button>
+          <span style={{ paddingRight: '10px', paddingLeft: '10px' }}>or</span>
         </>
       )}
+      <Button
+        data-testid={TEST_IDS.fillJwtManuallyButton}
+        type="button"
+        fill="outline"
+        style={{ color: `${theme.colors.primary.text}` }}
+        onClick={showConfigEditor}
+      >
+        Fill In JWT Token manually
+      </Button>
 
       {isPasting && error && (
         <Field>

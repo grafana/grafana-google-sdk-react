@@ -33,6 +33,10 @@ export function AuthConfig(props: AuthConfigProps) {
     setConfigEditorVisible(true);
   };
 
+  const hideConfigEditor = (): void => {
+    setConfigEditorVisible(false);
+  };
+
   const onAuthTypeChange = (authenticationType: string) => {
     setConfigEditorVisible(getJTWConfig());
     onOptionsChange({
@@ -79,7 +83,12 @@ export function AuthConfig(props: AuthConfigProps) {
       {jwtAuth && (
         <FieldSet label="JWT Key Details">
           {configEditorVisible ? (
-            <JWTForm options={options} onReset={() => onResetApiKey()} onOptionsChange={onOptionsChange} />
+            <JWTForm
+              options={options}
+              onReset={() => onResetApiKey()}
+              onOptionsChange={onOptionsChange}
+              hideConfigEditor={hideConfigEditor}
+            />
           ) : (
             <JWTConfigEditor
               showConfigEditor={showConfigEditor}

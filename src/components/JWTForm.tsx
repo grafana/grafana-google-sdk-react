@@ -14,7 +14,8 @@ export interface JWTFormProps {
   onReset: () => void;
   options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>;
   onOptionsChange: (options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>) => void;
-  hideConfigEditor: () => void;
+  showUpload: () => void;
+  showPaste: () => void;
 }
 
 enum PrivateKeyConfig {
@@ -26,7 +27,7 @@ const getInitialPrivateKeyConfig = (options: DataSourceOptions): PrivateKeyConfi
   return 'privateKeyPath' in options && options.privateKeyPath !== '' ? PrivateKeyConfig.PATH : PrivateKeyConfig.JWT;
 };
 
-export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onOptionsChange, hideConfigEditor }) => {
+export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onOptionsChange, showPaste, showUpload }) => {
   const [privateKeyConfig, setPrivateKeyConfig] = React.useState<PrivateKeyConfig>(
     getInitialPrivateKeyConfig(options.jsonData)
   );
@@ -134,7 +135,7 @@ export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onOptionsCha
             type="button"
             fill="outline"
             style={{ color: `${theme.colors.primary.text}` }}
-            onClick={hideConfigEditor}
+            onClick={showPaste}
           >
             Paste JWT Token
           </Button>
@@ -144,7 +145,7 @@ export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onOptionsCha
             type="button"
             fill="outline"
             style={{ color: `${theme.colors.primary.text}` }}
-            onClick={hideConfigEditor}
+            onClick={showUpload}
           >
             Upload JWT Token
           </Button>

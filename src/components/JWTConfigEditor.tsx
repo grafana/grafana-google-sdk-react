@@ -10,31 +10,39 @@ type JWTConfigDTO = Record<JWTConfigKeys, string>;
 export interface JWTConfigEditorProps {
   onChange: (config: JWTConfigDTO) => void;
   showConfigEditor: () => void;
+  showPaste: () => void;
+  showUpload: () => void;
+  isPasting: boolean;
+  isUploading: boolean;
 }
 
 const INVALID_JWT_TOKEN_ERROR = 'Invalid JWT token';
 
-export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, showConfigEditor }) => {
+export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({
+  onChange,
+  showConfigEditor,
+  showPaste,
+  showUpload,
+  isPasting,
+  isUploading,
+}) => {
   const [error, setError] = useState<string | null>();
-  const [isPasting, setIsPasting] = useState<boolean | null>(null);
-  const [isUploading, setIsUploading] = useState<boolean>(true);
   const theme = useTheme2();
 
   const onPasteClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>(
     (e) => {
       setError(null);
-      setIsPasting(true);
-      setIsUploading(false);
+      showPaste();
     },
-    [setIsPasting]
+    [showPaste]
   );
 
   const onUploadClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>(
     (e) => {
-      setIsPasting(null);
+      showUpload();
       setError(null);
     },
-    [setIsPasting]
+    [showUpload]
   );
 
   const readAndValidateJWT = useCallback(
@@ -83,7 +91,6 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, show
                   readAs="readAsText"
                   onLoad={(result) => {
                     readAndValidateJWT(result as string);
-                    setIsPasting(false);
                   }}
                 >
                   <p style={{ margin: 0, fontSize: `${theme.typography.h4.fontSize}`, textAlign: 'center' }}>
@@ -132,8 +139,7 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, show
             fill="outline"
             style={{ color: `${theme.colors.primary.text}` }}
             onClick={() => {
-              setIsUploading(true);
-              setIsPasting(false);
+              showUpload();
             }}
           >
             Upload JWT Token

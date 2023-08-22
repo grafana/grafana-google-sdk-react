@@ -28,12 +28,22 @@ export function AuthConfig(props: AuthConfigProps) {
 
   const [jwtAuth, setJWTAuth] = useState<boolean>(isJWTAuth(jsonData.authenticationType));
   const [configEditorVisible, setConfigEditorVisible] = useState<boolean>(getJTWConfig());
+  const [isPasting, setIsPasting] = useState<boolean>(false);
+  const [isUploading, setIsUploading] = useState<boolean>(true);
 
   const showConfigEditor = (): void => {
     setConfigEditorVisible(true);
   };
 
-  const hideConfigEditor = (): void => {
+  const showUpload = (): void => {
+    setIsPasting(false);
+    setIsUploading(true);
+    setConfigEditorVisible(false);
+  };
+
+  const showPaste = (): void => {
+    setIsPasting(true);
+    setIsUploading(false);
     setConfigEditorVisible(false);
   };
 
@@ -48,9 +58,7 @@ export function AuthConfig(props: AuthConfigProps) {
 
   const onResetApiKey = (jsonData?: Partial<DataSourceOptions>) => {
     const nextSecureJsonData = { ...secureJsonData };
-    const nextJsonData = !jsonData
-      ? { ...options.jsonData }
-      : { ...options.jsonData, ...jsonData };
+    const nextJsonData = !jsonData ? { ...options.jsonData } : { ...options.jsonData, ...jsonData };
 
     delete nextJsonData.clientEmail;
     delete nextJsonData.defaultProject;
@@ -87,11 +95,16 @@ export function AuthConfig(props: AuthConfigProps) {
               options={options}
               onReset={() => onResetApiKey()}
               onOptionsChange={onOptionsChange}
-              hideConfigEditor={hideConfigEditor}
+              showUpload={showUpload}
+              showPaste={showPaste}
             />
           ) : (
             <JWTConfigEditor
               showConfigEditor={showConfigEditor}
+              showUpload={showUpload}
+              showPaste={showPaste}
+              isPasting={isPasting}
+              isUploading={isUploading}
               onChange={(jwt) => {
                 onOptionsChange({
                   ...options,

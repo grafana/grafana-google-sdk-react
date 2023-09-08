@@ -10,29 +10,39 @@ type JWTConfigDTO = Record<JWTConfigKeys, string>;
 export interface JWTConfigEditorProps {
   onChange: (config: JWTConfigDTO) => void;
   showConfigEditor: () => void;
+  showPaste: () => void;
+  showUpload: () => void;
+  isPasting: boolean;
+  isUploading: boolean;
 }
 
 const INVALID_JWT_TOKEN_ERROR = 'Invalid JWT token';
 
-export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, showConfigEditor }) => {
+export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({
+  onChange,
+  showConfigEditor,
+  showPaste,
+  showUpload,
+  isPasting,
+  isUploading,
+}) => {
   const [error, setError] = useState<string | null>();
-  const [isPasting, setIsPasting] = useState<boolean | null>(null);
   const theme = useTheme2();
 
   const onPasteClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>(
     (e) => {
       setError(null);
-      setIsPasting(true);
+      showPaste();
     },
-    [setIsPasting]
+    [showPaste]
   );
 
   const onUploadClick = useCallback<React.MouseEventHandler<HTMLButtonElement>>(
     (e) => {
-      setIsPasting(null);
+      showUpload();
       setError(null);
     },
-    [setIsPasting]
+    [showUpload]
   );
 
   const readAndValidateJWT = useCallback(
@@ -72,7 +82,7 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, show
         error={error}
       >
         <>
-          {isPasting !== true && (
+          {isUploading && (
             <div data-testid={TEST_IDS.dropZone}>
               {/* Backward compatibility check. FileDropzone added in 8.1 */}
               {FileDropzone && (
@@ -81,7 +91,6 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, show
                   readAs="readAsText"
                   onLoad={(result) => {
                     readAndValidateJWT(result as string);
-                    setIsPasting(false);
                   }}
                 >
                   <p style={{ margin: 0, fontSize: `${theme.typography.h4.fontSize}`, textAlign: 'center' }}>
@@ -120,17 +129,33 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({ onChange, show
             Paste JWT Token
           </Button>
           <span style={{ paddingRight: '10px', paddingLeft: '10px' }}>or</span>
+        </>
+      )}
+      {isPasting && (
+        <>
           <Button
-            data-testid={TEST_IDS.fillJwtManuallyButton}
+            data-testid={TEST_IDS.uploadJwtButton}
             type="button"
             fill="outline"
             style={{ color: `${theme.colors.primary.text}` }}
-            onClick={showConfigEditor}
+            onClick={() => {
+              showUpload();
+            }}
           >
-            Fill In JWT Token manually
+            Upload JWT Token
           </Button>
+          <span style={{ paddingRight: '10px', paddingLeft: '10px' }}>or</span>
         </>
       )}
+      <Button
+        data-testid={TEST_IDS.fillJwtManuallyButton}
+        type="button"
+        fill="outline"
+        style={{ color: `${theme.colors.primary.text}` }}
+        onClick={showConfigEditor}
+      >
+        Fill In JWT Token manually
+      </Button>
 
       {isPasting && error && (
         <Field>

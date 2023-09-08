@@ -4,6 +4,7 @@ export const TEST_IDS = {
   pasteArea: 'Configuration text area',
   pasteJwtButton: 'Paste JWT button',
   resetJwtButton: 'Reset JWT button',
+  uploadJwtButton: 'Upload JWT button',
   jwtForm: 'JWT form',
   authTypeButtonJWT: 'JWT button',
   authTypeButtonGCE: 'GCE button',

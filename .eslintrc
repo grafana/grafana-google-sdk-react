@@ -7,7 +7,7 @@
       {
         "fixStyle": "inline-type-imports",
         "prefer": "type-imports"
-      },
-    ],
-  },
+      }
+    ]
+  }
 }

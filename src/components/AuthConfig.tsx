@@ -1,14 +1,24 @@
-import { DataSourceSettings, onUpdateDatasourceJsonDataOption, SelectableValue } from '@grafana/data';
-import { Field, FieldSet, Input, RadioButtonGroup } from '@grafana/ui';
-import React, { useState } from 'react';
-import { DataSourceOptions, DataSourceSecureJsonData, GoogleAuthType } from '../types';
-import { JWTConfigEditor } from './JWTConfigEditor';
-import { JWTForm } from './JWTForm';
+import {
+  type DataSourceSettings,
+  onUpdateDatasourceJsonDataOption,
+  type SelectableValue,
+} from "@grafana/data";
+import { Field, FieldSet, Input, RadioButtonGroup } from "@grafana/ui";
+import React, { useState } from "react";
+import {
+  type DataSourceOptions,
+  type DataSourceSecureJsonData,
+  GoogleAuthType,
+} from "../types";
+import { JWTConfigEditor } from "./JWTConfigEditor";
+import { JWTForm } from "./JWTForm";
 
 export interface AuthConfigProps {
   authOptions: SelectableValue[];
   options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>;
-  onOptionsChange: (options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>) => void;
+  onOptionsChange: (
+    options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
+  ) => void;
 }
 
 export function AuthConfig(props: AuthConfigProps) {
@@ -19,15 +29,20 @@ export function AuthConfig(props: AuthConfigProps) {
       jsonData.clientEmail &&
         jsonData.defaultProject &&
         jsonData.tokenUri &&
-        ((secureJsonFields && secureJsonFields.privateKey) || jsonData.privateKeyPath)
+        ((secureJsonFields && secureJsonFields.privateKey) ||
+          jsonData.privateKeyPath)
     );
 
   if (!jsonData.authenticationType) {
     jsonData.authenticationType = GoogleAuthType.JWT;
   }
 
-  const [jwtAuth, setJWTAuth] = useState<boolean>(isJWTAuth(jsonData.authenticationType));
-  const [configEditorVisible, setConfigEditorVisible] = useState<boolean>(getJTWConfig());
+  const [jwtAuth, setJWTAuth] = useState<boolean>(
+    isJWTAuth(jsonData.authenticationType)
+  );
+  const [configEditorVisible, setConfigEditorVisible] = useState<boolean>(
+    getJTWConfig()
+  );
   const [isPasting, setIsPasting] = useState<boolean>(false);
   const [isUploading, setIsUploading] = useState<boolean>(true);
 
@@ -58,7 +73,9 @@ export function AuthConfig(props: AuthConfigProps) {
 
   const onResetApiKey = (jsonData?: Partial<DataSourceOptions>) => {
     const nextSecureJsonData = { ...secureJsonData };
-    const nextJsonData = !jsonData ? { ...options.jsonData } : { ...options.jsonData, ...jsonData };
+    const nextJsonData = !jsonData
+      ? { ...options.jsonData }
+      : { ...options.jsonData, ...jsonData };
 
     delete nextJsonData.clientEmail;
     delete nextJsonData.defaultProject;
@@ -122,7 +139,7 @@ export function AuthConfig(props: AuthConfigProps) {
                 });
               }}
             />
-          )}{' '}
+          )}{" "}
         </FieldSet>
       )}
 
@@ -131,8 +148,8 @@ export function AuthConfig(props: AuthConfigProps) {
           <Input
             id="defaultProject"
             width={60}
-            value={options.jsonData.defaultProject || ''}
-            onChange={onUpdateDatasourceJsonDataOption(props, 'defaultProject')}
+            value={options.jsonData.defaultProject || ""}
+            onChange={onUpdateDatasourceJsonDataOption(props, "defaultProject")}
           />
         </Field>
       )}
@@ -141,5 +158,8 @@ export function AuthConfig(props: AuthConfigProps) {
 }
 
 const isJWTAuth = (authenticationType: string): boolean => {
-  return authenticationType === GoogleAuthType.JWT || authenticationType === undefined;
+  return (
+    authenticationType === GoogleAuthType.JWT ||
+    authenticationType === undefined
+  );
 };

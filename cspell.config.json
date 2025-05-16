@@ -1,0 +1,4 @@
+{
+  "ignorePaths": ["node_modules", "dist", "build", "coverage"],
+  "words": ["inlinesvg", "infobox"]
+}

@@ -1,14 +1,23 @@
-import { DataSourcePluginOptionsEditorProps } from '@grafana/data';
-import { Alert } from '@grafana/ui';
-import React from 'react';
-import { AuthConfig } from './components/AuthConfig';
-import { GOOGLE_AUTH_TYPE_OPTIONS } from './constants';
-import { TEST_IDS } from './testIds';
-import { DataSourceOptions, DataSourceSecureJsonData, GoogleAuthType } from './types';
+import { type DataSourcePluginOptionsEditorProps } from "@grafana/data";
+import { Alert } from "@grafana/ui";
+import React from "react";
+import { AuthConfig } from "./components/AuthConfig";
+import { GOOGLE_AUTH_TYPE_OPTIONS } from "./constants";
+import { TEST_IDS } from "./testIds";
+import {
+  type DataSourceOptions,
+  type DataSourceSecureJsonData,
+  GoogleAuthType,
+} from "./types";
 
-export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<DataSourceOptions, DataSourceSecureJsonData>;
+export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<
+  DataSourceOptions,
+  DataSourceSecureJsonData
+>;
 
-export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEditorProps) => {
+export const ConnectionConfig: React.FC<ConfigEditorProps> = (
+  props: ConfigEditorProps
+) => {
   const {
     options: { jsonData },
   } = props;
@@ -17,14 +26,21 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEdito
     jsonData.authenticationType = GoogleAuthType.JWT;
   }
 
-  const isJWT = jsonData.authenticationType === GoogleAuthType.JWT || jsonData.authenticationType === undefined;
+  const isJWT =
+    jsonData.authenticationType === GoogleAuthType.JWT ||
+    jsonData.authenticationType === undefined;
 
   return (
     <>
       <AuthConfig authOptions={GOOGLE_AUTH_TYPE_OPTIONS} {...props} />
-      <div className="grafana-info-box" style={{ marginTop: '16px' }} data-testid={TEST_IDS.helpBox}>
+      <div
+        className="grafana-info-box"
+        style={{ marginTop: "16px" }}
+        data-testid={TEST_IDS.helpBox}
+      >
         <p>
-          Don’t know how to get a service account key file or create a service account? Read more{' '}
+          Don’t know how to get a service account key file or create a service
+          account? Read more{" "}
           <a
             className="external-link"
             target="_blank"

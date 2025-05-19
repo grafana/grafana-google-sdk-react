@@ -1,10 +1,10 @@
-import { Button, Field, FileDropzone, TextArea, useTheme2 } from '@grafana/ui';
-import { isObject } from 'lodash';
-import React, { useCallback, useState } from 'react';
-import { TEST_IDS } from '../testIds';
+import { Button, Field, FileDropzone, TextArea, useTheme2 } from "@grafana/ui";
+import { isObject } from "lodash";
+import React, { useCallback, useState } from "react";
+import { TEST_IDS } from "../testIds";
 
-const configKeys = ['private_key', 'token_uri', 'client_email', 'project_id'];
-type JWTConfigKeys = 'privateKey' | 'tokenUri' | 'clientEmail' | 'projectId';
+const configKeys = ["private_key", "token_uri", "client_email", "project_id"];
+type JWTConfigKeys = "privateKey" | "tokenUri" | "clientEmail" | "projectId";
 type JWTConfigDTO = Record<JWTConfigKeys, string>;
 
 export interface JWTConfigEditorProps {
@@ -16,7 +16,7 @@ export interface JWTConfigEditorProps {
   isUploading: boolean;
 }
 
-const INVALID_JWT_TOKEN_ERROR = 'Invalid JWT token';
+const INVALID_JWT_TOKEN_ERROR = "Invalid JWT token";
 
 export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({
   onChange,
@@ -47,7 +47,7 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({
 
   const readAndValidateJWT = useCallback(
     (value: string) => {
-      if (value.trim() !== '') {
+      if (value.trim() !== "") {
         let jwt;
         try {
           jwt = JSON.parse(value);
@@ -78,7 +78,11 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({
       <Field
         label="JWT token"
         invalid={Boolean(error)}
-        description={isPasting ? 'Paste JWT token below' : 'Upload or paste Google JWT token'}
+        description={
+          isPasting
+            ? "Paste JWT token below"
+            : "Upload or paste Google JWT token"
+        }
         error={error}
       >
         <>
@@ -87,13 +91,19 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({
               {/* Backward compatibility check. FileDropzone added in 8.1 */}
               {FileDropzone && (
                 <FileDropzone
-                  options={{ multiple: false, accept: '.json' }}
+                  options={{ multiple: false, accept: ".json" }}
                   readAs="readAsText"
                   onLoad={(result) => {
                     readAndValidateJWT(result as string);
                   }}
                 >
-                  <p style={{ margin: 0, fontSize: `${theme.typography.h4.fontSize}`, textAlign: 'center' }}>
+                  <p
+                    style={{
+                      margin: 0,
+                      fontSize: `${theme.typography.h4.fontSize}`,
+                      textAlign: "center",
+                    }}
+                  >
                     Drop the Google JWT file here
                     <br />
                     <br />
@@ -128,7 +138,7 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({
           >
             Paste JWT Token
           </Button>
-          <span style={{ paddingRight: '10px', paddingLeft: '10px' }}>or</span>
+          <span style={{ paddingRight: "10px", paddingLeft: "10px" }}>or</span>
         </>
       )}
       {isPasting && (
@@ -144,7 +154,7 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({
           >
             Upload JWT Token
           </Button>
-          <span style={{ paddingRight: '10px', paddingLeft: '10px' }}>or</span>
+          <span style={{ paddingRight: "10px", paddingLeft: "10px" }}>or</span>
         </>
       )}
       <Button
@@ -173,13 +183,15 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({
   );
 };
 
-const validateJWT = (json: Record<string, string>): { isValid: boolean; error?: string } => {
+const validateJWT = (
+  json: Record<string, string>
+): { isValid: boolean; error?: string } => {
   if (!isObject(json)) {
-    return { isValid: false, error: 'Invalid JWT token' };
+    return { isValid: false, error: "Invalid JWT token" };
   }
   const missingKeys = configKeys.filter((key) => !json[key]);
   if (missingKeys.length > 0) {
-    return { isValid: false, error: `Missing keys: ${missingKeys.join(', ')}` };
+    return { isValid: false, error: `Missing keys: ${missingKeys.join(", ")}` };
   }
 
   return { isValid: true };

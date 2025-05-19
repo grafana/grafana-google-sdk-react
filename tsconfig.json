@@ -1,11 +1,16 @@
 {
-  "extends": "@grafana/tsconfig/base.json",
-  "include": ["src", "index.js"],
+  "extends": "@grafana/tsconfig",
   "compilerOptions": {
-    "rootDir": "./src",
-    "baseUrl": "./src",
-    "typeRoots": ["./node_modules/@types"],
-    "declaration": true,
-    "outDir": "dist"
-  }
+    "allowJs": true,
+    "importHelpers": false,
+    "isolatedModules": true,
+    "module": "preserve",
+    "moduleDetection": "force",
+    "noEmit": true,
+    "outDir": "dist",
+    "resolveJsonModule": true,
+    "target": "es2022",
+    "verbatimModuleSyntax": true
+  },
+  "include": ["src"]
 }

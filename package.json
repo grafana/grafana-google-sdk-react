@@ -1,6 +1,6 @@
 {
   "name": "@grafana/google-sdk",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Common Google features for grafana",
   "type": "module",
   "main": "dist/cjs/index.cjs",
@@ -43,10 +43,10 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@grafana/data": "^10.4.0",
+    "@grafana/data": "^11.5.3",
     "@grafana/eslint-config": "^8.0.0",
     "@grafana/tsconfig": "^2.0.0",
-    "@grafana/ui": "^10.4.0",
+    "@grafana/ui": "^11.5.3",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@stylistic/eslint-plugin-ts": "^3.1.0",

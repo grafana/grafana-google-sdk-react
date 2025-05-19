@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.2.0
+
+- Update package bundling to emit ESM and CJS modules
+- Raise minimum Grafana version to 10.4.0
+
 ## v0.1.2
 
 - Fix config options disappearing.

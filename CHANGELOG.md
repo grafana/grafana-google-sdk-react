@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.3.0
+
+- Add service account impersonation support
+
 ## v0.2.0
 
 - Update package bundling to emit ESM and CJS modules

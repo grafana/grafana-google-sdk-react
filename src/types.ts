@@ -11,6 +11,8 @@ export interface DataSourceOptions extends DataSourceJsonData {
   clientEmail?: string;
   defaultProject?: string;
   privateKeyPath?: string;
+  serviceAccountToImpersonate?: string;
+  usingImpersonation?: boolean;
 }
 
 export interface DataSourceSecureJsonData {

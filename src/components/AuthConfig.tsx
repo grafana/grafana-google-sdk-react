@@ -1,9 +1,16 @@
 import {
   type DataSourceSettings,
   onUpdateDatasourceJsonDataOption,
+  onUpdateDatasourceJsonDataOptionChecked,
   type SelectableValue,
 } from "@grafana/data";
-import { Field, FieldSet, Input, RadioButtonGroup } from "@grafana/ui";
+import {
+  Field,
+  FieldSet,
+  Input,
+  RadioButtonGroup,
+  Switch
+} from "@grafana/ui";
 import React, { useState } from "react";
 import {
   type DataSourceOptions,
@@ -153,6 +160,51 @@ export function AuthConfig(props: AuthConfigProps) {
           />
         </Field>
       )}
+
+      <FieldSet label="Service account impersonation">
+        <Field
+          label="Enable"
+          htmlFor="usingImpersonation"
+          description={
+            <span>
+              Read more about service account impersonation{" "}
+              <a
+                href="https://cloud.google.com/iam/docs/service-account-impersonation"
+                rel="noreferrer"
+                className="external-link"
+                target="_blank"
+              >
+                here
+              </a>
+            </span>
+          }
+        >
+          <Switch
+            value={options.jsonData.usingImpersonation || false}
+            onChange={onUpdateDatasourceJsonDataOptionChecked(
+              props,
+              "usingImpersonation"
+            )}
+            id="usingImpersonation"
+          />
+        </Field>
+        {options.jsonData.usingImpersonation && (
+          <Field
+            label="Service account to impersonate"
+            htmlFor="serviceAccountToImpersonate"
+          >
+            <Input
+              id="serviceAccountToImpersonate"
+              width={60}
+              value={options.jsonData.serviceAccountToImpersonate || ""}
+              onChange={onUpdateDatasourceJsonDataOption(
+                props,
+                "serviceAccountToImpersonate"
+              )}
+            />
+          </Field>
+        )}
+      </FieldSet>
     </>
   );
 }

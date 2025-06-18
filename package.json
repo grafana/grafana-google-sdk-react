@@ -1,6 +1,6 @@
 {
   "name": "@grafana/google-sdk",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Common Google features for grafana",
   "type": "module",
   "main": "dist/cjs/index.cjs",

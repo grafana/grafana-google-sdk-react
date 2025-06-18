@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.3.2
+
+- Fix package.jon repository URL
+- Fix build to emit CJS files
+
 ## v0.3.1
 
 - Fix: do not mutate the options object

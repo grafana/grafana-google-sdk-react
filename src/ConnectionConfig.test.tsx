@@ -28,12 +28,14 @@ const makeJsonData: (
 ) => DataSourceSettings<
   DataSourceOptions,
   DataSourceSecureJsonData
->["jsonData"] = (authenticationType = GoogleAuthType.JWT) => ({
-  authenticationType,
-  clientEmail: "test@grafana.com",
-  tokenUri: "https://accounts.google.com/o/oauth2/token",
-  defaultProject: "test-project",
-});
+>["jsonData"] = (authenticationType = GoogleAuthType.JWT) => {
+  return Object.freeze({
+    authenticationType,
+    clientEmail: "test@grafana.com",
+    tokenUri: "https://accounts.google.com/o/oauth2/token",
+    defaultProject: "test-project",
+  });
+};
 
 describe("ConnectionConfig", () => {
   it("renders help box", () => {
@@ -309,6 +311,30 @@ describe("ConnectionConfig", () => {
       jsonData: expectedJsonData,
       secureJsonData: {},
     });
+  });
+
+  it("makes sure JWT is selected by default", () => {
+    const onOptionsChangeSpy = jest.fn();
+    const jsonData = Object.freeze({});
+
+    render(
+      <ConnectionConfig
+        options={
+          {
+            secureJsonData: {},
+            jsonData,
+          } as unknown as DataSourceSettings<
+            DataSourceOptions,
+            DataSourceSecureJsonData
+          >
+        }
+        onOptionsChange={onOptionsChangeSpy}
+      />
+    );
+
+    expect(
+      screen.queryByTestId(TEST_IDS.fillJwtManuallyButton)
+    ).toBeInTheDocument();
   });
 });
 

@@ -4,19 +4,14 @@ import {
   onUpdateDatasourceJsonDataOptionChecked,
   type SelectableValue,
 } from "@grafana/data";
-import {
-  Field,
-  FieldSet,
-  Input,
-  RadioButtonGroup,
-  Switch
-} from "@grafana/ui";
+import { Field, FieldSet, Input, RadioButtonGroup, Switch } from "@grafana/ui";
 import React, { useState } from "react";
 import {
   type DataSourceOptions,
   type DataSourceSecureJsonData,
   GoogleAuthType,
 } from "../types";
+import { getOptionsWithDefaults } from "../utils";
 import { JWTConfigEditor } from "./JWTConfigEditor";
 import { JWTForm } from "./JWTForm";
 
@@ -30,7 +25,8 @@ export interface AuthConfigProps {
 
 export function AuthConfig(props: AuthConfigProps) {
   const { options, onOptionsChange, authOptions } = props;
-  const { jsonData, secureJsonFields, secureJsonData } = options;
+  const { jsonData, secureJsonFields, secureJsonData } =
+    getOptionsWithDefaults(options);
   const getJTWConfig = (): boolean =>
     Boolean(
       jsonData.clientEmail &&
@@ -39,10 +35,6 @@ export function AuthConfig(props: AuthConfigProps) {
         ((secureJsonFields && secureJsonFields.privateKey) ||
           jsonData.privateKeyPath)
     );
-
-  if (!jsonData.authenticationType) {
-    jsonData.authenticationType = GoogleAuthType.JWT;
-  }
 
   const [jwtAuth, setJWTAuth] = useState<boolean>(
     isJWTAuth(jsonData.authenticationType)

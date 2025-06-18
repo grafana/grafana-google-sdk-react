@@ -9,6 +9,7 @@ import {
   type DataSourceSecureJsonData,
   GoogleAuthType,
 } from "./types";
+import { getOptionsWithDefaults } from "./utils";
 
 export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<
   DataSourceOptions,
@@ -18,21 +19,19 @@ export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<
 export const ConnectionConfig: React.FC<ConfigEditorProps> = (
   props: ConfigEditorProps
 ) => {
-  const {
-    options: { jsonData },
-  } = props;
-
-  if (!jsonData.authenticationType) {
-    jsonData.authenticationType = GoogleAuthType.JWT;
-  }
+  const optionsWithDefault = getOptionsWithDefaults(props.options);
 
   const isJWT =
-    jsonData.authenticationType === GoogleAuthType.JWT ||
-    jsonData.authenticationType === undefined;
+    optionsWithDefault.jsonData.authenticationType === GoogleAuthType.JWT ||
+    optionsWithDefault.jsonData.authenticationType === undefined;
 
   return (
     <>
-      <AuthConfig authOptions={GOOGLE_AUTH_TYPE_OPTIONS} {...props} />
+      <AuthConfig
+        authOptions={GOOGLE_AUTH_TYPE_OPTIONS}
+        onOptionsChange={props.onOptionsChange}
+        options={optionsWithDefault}
+      />
       <div
         className="grafana-info-box"
         style={{ marginTop: "16px" }}

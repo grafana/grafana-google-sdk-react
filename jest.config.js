@@ -1,4 +1,4 @@
-// @ts-check
+import path from "path";
 
 /*
  * This utility function is useful in combination with jest `transformIgnorePatterns` config
@@ -43,6 +43,12 @@ const config = {
   setupFilesAfterEnv: ["<rootDir>/jest-setup.js"],
   moduleNameMapper: {
     "\\.(css|scss|sass)$": "identity-obj-proxy",
+    "react-inlinesvg": path.resolve(
+      path.dirname(""),
+      "jest",
+      "mocks",
+      "react-inlinesvg.tsx"
+    ),
   },
   testEnvironment: "jest-environment-jsdom",
   // Jest will throw `Cannot use import statement outside module` if it tries to load an

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.3.1
+
+- Fix: do not mutate the options object
+
 ## v0.3.0
 
 - Add service account impersonation support

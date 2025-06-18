@@ -38,7 +38,7 @@ export default [
       {
         format: "cjs",
         sourcemap: true,
-        dir: path.dirname(pkg.main),
+        file: pkg.main,
         ...legacyOutputDefaults,
       },
       {

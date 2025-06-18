@@ -315,7 +315,7 @@ describe("ConnectionConfig", () => {
 
   it("makes sure JWT is selected by default", () => {
     const onOptionsChangeSpy = jest.fn();
-    const jsonData = deepFreeze({});
+    const jsonData = Object.freeze({});
 
     render(
       <ConnectionConfig
@@ -357,20 +357,3 @@ const WrapInState = ({ defaultOptions, children }: WrapInStateProps) => {
   const [options, setOptions] = useState(defaultOptions);
   return children({ options, setOptions });
 };
-
-function deepFreeze(obj: any): Readonly<any> {
-  // Retrieve the property names defined on obj
-  const propNames = Object.getOwnPropertyNames(obj);
-
-  // Freeze properties before freezing self
-  for (const name of propNames) {
-    const value = obj[name];
-
-    // If value is an object, freeze it recursively
-    if (value && typeof value === "object") {
-      deepFreeze(value);
-    }
-  }
-
-  return Object.freeze(obj);
-}

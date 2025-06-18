@@ -28,12 +28,14 @@ const makeJsonData: (
 ) => DataSourceSettings<
   DataSourceOptions,
   DataSourceSecureJsonData
->["jsonData"] = (authenticationType = GoogleAuthType.JWT) => ({
-  authenticationType,
-  clientEmail: "test@grafana.com",
-  tokenUri: "https://accounts.google.com/o/oauth2/token",
-  defaultProject: "test-project",
-});
+>["jsonData"] = (authenticationType = GoogleAuthType.JWT) => {
+  return Object.freeze({
+    authenticationType,
+    clientEmail: "test@grafana.com",
+    tokenUri: "https://accounts.google.com/o/oauth2/token",
+    defaultProject: "test-project",
+  });
+};
 
 describe("ConnectionConfig", () => {
   it("renders help box", () => {
@@ -310,6 +312,30 @@ describe("ConnectionConfig", () => {
       secureJsonData: {},
     });
   });
+
+  it("makes sure JWT is selected by default", () => {
+    const onOptionsChangeSpy = jest.fn();
+    const jsonData = deepFreeze({});
+
+    render(
+      <ConnectionConfig
+        options={
+          {
+            secureJsonData: {},
+            jsonData,
+          } as unknown as DataSourceSettings<
+            DataSourceOptions,
+            DataSourceSecureJsonData
+          >
+        }
+        onOptionsChange={onOptionsChangeSpy}
+      />
+    );
+
+    expect(
+      screen.queryByTestId(TEST_IDS.fillJwtManuallyButton)
+    ).toBeInTheDocument();
+  });
 });
 
 interface WrapInStateChildrenProps {
@@ -331,3 +357,20 @@ const WrapInState = ({ defaultOptions, children }: WrapInStateProps) => {
   const [options, setOptions] = useState(defaultOptions);
   return children({ options, setOptions });
 };
+
+function deepFreeze(obj: any): Readonly<any> {
+  // Retrieve the property names defined on obj
+  const propNames = Object.getOwnPropertyNames(obj);
+
+  // Freeze properties before freezing self
+  for (const name of propNames) {
+    const value = obj[name];
+
+    // If value is an object, freeze it recursively
+    if (value && typeof value === "object") {
+      deepFreeze(value);
+    }
+  }
+
+  return Object.freeze(obj);
+}

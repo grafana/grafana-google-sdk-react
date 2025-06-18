@@ -23,3 +23,5 @@ jobs:
       - run: yarn typecheck
       - run: yarn test:ci
       - run: yarn build
+      - run: yarn verify-types
+      - run: yarn lint:package

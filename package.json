@@ -24,6 +24,8 @@
     "build": "tsc -p ./tsconfig.build.json && rollup -c rollup.config.ts --configPlugin esbuild",
     "lint": "eslint --cache --ignore-path ./.gitignore --ext .js,.jsx,.ts,.tsx .",
     "lint:fix": "yarn run lint --fix",
+    "lint:package": "publint",
+    "verify-types": "attw --pack .",
     "typecheck": "tsc",
     "clean": "rm -rf ./dist ./compiled",
     "test": "jest --watch",
@@ -46,6 +48,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.2",
     "@grafana/data": "^11.5.3",
     "@grafana/eslint-config": "^8.0.0",
     "@grafana/tsconfig": "^2.0.0",
@@ -75,6 +78,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "lodash": "^4.17.21",
+    "publint": "^0.3.12",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "rollup": "^4.40.2",

@@ -21,10 +21,16 @@ export interface AuthConfigProps {
   onOptionsChange: (
     options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
   ) => void;
+  showServiceAccountImpersonationConfig?: boolean;
 }
 
 export function AuthConfig(props: AuthConfigProps) {
-  const { options, onOptionsChange, authOptions } = props;
+  const {
+    options,
+    onOptionsChange,
+    authOptions,
+    showServiceAccountImpersonationConfig,
+  } = props;
   const { jsonData, secureJsonFields, secureJsonData } =
     getOptionsWithDefaults(options);
   const getJTWConfig = (): boolean =>
@@ -152,51 +158,52 @@ export function AuthConfig(props: AuthConfigProps) {
           />
         </Field>
       )}
-
-      <FieldSet label="Service account impersonation">
-        <Field
-          label="Enable"
-          htmlFor="usingImpersonation"
-          description={
-            <span>
-              Read more about service account impersonation{" "}
-              <a
-                href="https://cloud.google.com/iam/docs/service-account-impersonation"
-                rel="noreferrer"
-                className="external-link"
-                target="_blank"
-              >
-                here
-              </a>
-            </span>
-          }
-        >
-          <Switch
-            value={options.jsonData.usingImpersonation || false}
-            onChange={onUpdateDatasourceJsonDataOptionChecked(
-              props,
-              "usingImpersonation"
-            )}
-            id="usingImpersonation"
-          />
-        </Field>
-        {options.jsonData.usingImpersonation && (
+      {showServiceAccountImpersonationConfig && (
+        <FieldSet label="Service account impersonation">
           <Field
-            label="Service account to impersonate"
-            htmlFor="serviceAccountToImpersonate"
+            label="Enable"
+            htmlFor="usingImpersonation"
+            description={
+              <span>
+                Read more about service account impersonation{" "}
+                <a
+                  href="https://cloud.google.com/iam/docs/service-account-impersonation"
+                  rel="noreferrer"
+                  className="external-link"
+                  target="_blank"
+                >
+                  here
+                </a>
+              </span>
+            }
           >
-            <Input
-              id="serviceAccountToImpersonate"
-              width={60}
-              value={options.jsonData.serviceAccountToImpersonate || ""}
-              onChange={onUpdateDatasourceJsonDataOption(
+            <Switch
+              value={options.jsonData.usingImpersonation || false}
+              onChange={onUpdateDatasourceJsonDataOptionChecked(
                 props,
-                "serviceAccountToImpersonate"
+                "usingImpersonation"
               )}
+              id="usingImpersonation"
             />
           </Field>
-        )}
-      </FieldSet>
+          {options.jsonData.usingImpersonation && (
+            <Field
+              label="Service account to impersonate"
+              htmlFor="serviceAccountToImpersonate"
+            >
+              <Input
+                id="serviceAccountToImpersonate"
+                width={60}
+                value={options.jsonData.serviceAccountToImpersonate || ""}
+                onChange={onUpdateDatasourceJsonDataOption(
+                  props,
+                  "serviceAccountToImpersonate"
+                )}
+              />
+            </Field>
+          )}
+        </FieldSet>
+      )}
     </>
   );
 }

@@ -30,6 +30,7 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (
       <AuthConfig
         authOptions={GOOGLE_AUTH_TYPE_OPTIONS}
         onOptionsChange={props.onOptionsChange}
+        showServiceAccountImpersonationConfig={true}
         options={optionsWithDefault}
       />
       <div

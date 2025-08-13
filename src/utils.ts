@@ -12,9 +12,10 @@ import {
  * with `authenticationType` set to `GoogleAuthType.JWT`. Otherwise, it returns the original options object.
  *
  */
-export const getOptionsWithDefaults = (
-  options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
-) => {
+export function getOptionsWithDefaults<
+  TJsonData extends DataSourceOptions,
+  TSecureJsonData extends DataSourceSecureJsonData
+>(options: DataSourceSettings<TJsonData, TSecureJsonData>) {
   if (!options.jsonData.authenticationType) {
     return {
       ...options,
@@ -23,4 +24,4 @@ export const getOptionsWithDefaults = (
   }
 
   return options;
-};
+}

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.3.5
+
+- Export `getOptionsWithDefaults` function
+
 ## v0.3.4
 
 - Enable service account impersonation by default in `ConnectionConfig` component

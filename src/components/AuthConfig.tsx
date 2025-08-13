@@ -32,7 +32,7 @@ export function AuthConfig(props: AuthConfigProps) {
     showServiceAccountImpersonationConfig,
   } = props;
   const { jsonData, secureJsonFields, secureJsonData } =
-    getOptionsWithDefaults(options);
+    getOptionsWithDefaults(options, onOptionsChange);
   const getJTWConfig = (): boolean =>
     Boolean(
       jsonData.clientEmail &&

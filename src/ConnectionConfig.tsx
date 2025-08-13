@@ -19,7 +19,10 @@ export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<
 export const ConnectionConfig: React.FC<ConfigEditorProps> = (
   props: ConfigEditorProps
 ) => {
-  const optionsWithDefault = getOptionsWithDefaults(props.options);
+  const optionsWithDefault = getOptionsWithDefaults(
+    props.options,
+    props.onOptionsChange
+  );
 
   const isJWT =
     optionsWithDefault.jsonData.authenticationType === GoogleAuthType.JWT ||

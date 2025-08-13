@@ -13,13 +13,18 @@ import {
  *
  */
 export const getOptionsWithDefaults = (
-  options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
+  options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>,
+  onOptionsChange: (
+    options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
+  ) => void
 ) => {
   if (!options.jsonData.authenticationType) {
-    return {
+    const newOptions = {
       ...options,
       jsonData: { ...options.jsonData, authenticationType: GoogleAuthType.JWT },
     };
+    onOptionsChange(newOptions);
+    return newOptions;
   }
 
   return options;

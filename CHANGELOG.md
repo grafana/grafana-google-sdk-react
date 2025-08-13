@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## v0.3.5
 
-- Export `getOptionsWithDefaults` function
+- Fix `getOptionsWithDefaults` function to call `onOptionsChange` to persist the default value
 
 ## v0.3.4
 

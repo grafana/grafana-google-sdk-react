@@ -50,7 +50,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
     "@grafana/data": "^11.5.3",
-    "@grafana/eslint-config": "^8.0.0",
+    "@grafana/eslint-config": "^9.0.0",
     "@grafana/tsconfig": "^2.0.0",
     "@grafana/ui": "^11.5.3",
     "@rollup/plugin-commonjs": "^28.0.3",

@@ -1,28 +1,16 @@
-import { type DataSourcePluginOptionsEditorProps } from "@grafana/data";
-import { Alert } from "@grafana/ui";
-import React from "react";
-import { AuthConfig } from "./components/AuthConfig";
-import { GOOGLE_AUTH_TYPE_OPTIONS } from "./constants";
-import { TEST_IDS } from "./testIds";
-import {
-  type DataSourceOptions,
-  type DataSourceSecureJsonData,
-  GoogleAuthType,
-} from "./types";
-import { getOptionsWithDefaults } from "./utils";
+import { type DataSourcePluginOptionsEditorProps } from '@grafana/data';
+import { Alert } from '@grafana/ui';
+import React from 'react';
+import { AuthConfig } from './components/AuthConfig';
+import { GOOGLE_AUTH_TYPE_OPTIONS } from './constants';
+import { TEST_IDS } from './testIds';
+import { type DataSourceOptions, type DataSourceSecureJsonData, GoogleAuthType } from './types';
+import { getOptionsWithDefaults } from './utils';
 
-export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<
-  DataSourceOptions,
-  DataSourceSecureJsonData
->;
+export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<DataSourceOptions, DataSourceSecureJsonData>;
 
-export const ConnectionConfig: React.FC<ConfigEditorProps> = (
-  props: ConfigEditorProps
-) => {
-  const optionsWithDefault = getOptionsWithDefaults(
-    props.options,
-    props.onOptionsChange
-  );
+export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEditorProps) => {
+  const optionsWithDefault = getOptionsWithDefaults(props.options, props.onOptionsChange);
 
   const isJWT =
     optionsWithDefault.jsonData.authenticationType === GoogleAuthType.JWT ||
@@ -36,14 +24,9 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (
         showServiceAccountImpersonationConfig={true}
         options={optionsWithDefault}
       />
-      <div
-        className="grafana-info-box"
-        style={{ marginTop: "16px" }}
-        data-testid={TEST_IDS.helpBox}
-      >
+      <div className="grafana-info-box" style={{ marginTop: '16px' }} data-testid={TEST_IDS.helpBox}>
         <p>
-          Don’t know how to get a service account key file or create a service
-          account? Read more{" "}
+          Don’t know how to get a service account key file or create a service account? Read more{' '}
           <a
             className="external-link"
             target="_blank"

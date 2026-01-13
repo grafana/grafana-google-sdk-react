@@ -1,9 +1,5 @@
-import type { DataSourceSettings } from "@grafana/data";
-import {
-  type DataSourceOptions,
-  type DataSourceSecureJsonData,
-  GoogleAuthType,
-} from "./types";
+import type { DataSourceSettings } from '@grafana/data';
+import { type DataSourceOptions, type DataSourceSecureJsonData, GoogleAuthType } from './types';
 
 /**
  * Ensures that the `options` object contains a default `authenticationType` in its `jsonData` property.
@@ -14,9 +10,7 @@ import {
  */
 export const getOptionsWithDefaults = (
   options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>,
-  onOptionsChange: (
-    options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
-  ) => void
+  onOptionsChange: (options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>) => void
 ) => {
   if (!options.jsonData.authenticationType) {
     const newOptions = {

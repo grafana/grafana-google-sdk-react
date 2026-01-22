@@ -53,7 +53,7 @@
     "@grafana/eslint-config": "^8.0.0",
     "@grafana/tsconfig": "^2.0.0",
     "@grafana/ui": "^11.5.3",
-    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-commonjs": "^29.0.0",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@stylistic/eslint-plugin-ts": "^3.1.0",
     "@swc/core": "^1.15.8",

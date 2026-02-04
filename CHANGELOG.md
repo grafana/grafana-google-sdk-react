@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.4.0
+
+- Update dev dependencies
+- Bumped grafana peer dependencies to 11.6.0
+- Removed support for old SecretInput component that was needed for v8 support
+
 ## v0.3.5
 
 - Fix `getOptionsWithDefaults` function to call `onOptionsChange` to persist the default value

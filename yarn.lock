@@ -29,7 +29,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@arethetypeswrong/cli@npm:^0.18.2":
+"@arethetypeswrong/cli@npm:0.18.2":
   version: 0.18.2
   resolution: "@arethetypeswrong/cli@npm:0.18.2"
   dependencies:
@@ -1474,7 +1474,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/data@npm:11.6.1, @grafana/data@npm:^11.5.3":
+"@grafana/data@npm:11.6.1":
   version: 11.6.1
   resolution: "@grafana/data@npm:11.6.1"
   dependencies:
@@ -1521,7 +1521,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/eslint-config@npm:^8.0.0":
+"@grafana/eslint-config@npm:8.0.0":
   version: 8.0.0
   resolution: "@grafana/eslint-config@npm:8.0.0"
   peerDependencies:
@@ -1563,45 +1563,45 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@grafana/google-sdk@workspace:."
   dependencies:
-    "@arethetypeswrong/cli": "npm:^0.18.2"
-    "@grafana/data": "npm:^11.5.3"
-    "@grafana/eslint-config": "npm:^8.0.0"
-    "@grafana/tsconfig": "npm:^2.0.0"
-    "@grafana/ui": "npm:^11.5.3"
-    "@rollup/plugin-commonjs": "npm:^28.0.3"
-    "@rollup/plugin-node-resolve": "npm:^16.0.1"
-    "@stylistic/eslint-plugin-ts": "npm:^3.1.0"
-    "@swc/core": "npm:^1.15.8"
-    "@swc/jest": "npm:^0.2.38"
-    "@testing-library/dom": "npm:^10.4.0"
-    "@testing-library/jest-dom": "npm:^6.6.3"
-    "@testing-library/react": "npm:^16.3.0"
-    "@types/identity-obj-proxy": "npm:^3"
-    "@types/jest": "npm:^29.5.14"
-    "@types/lodash": "npm:^4.17.16"
+    "@arethetypeswrong/cli": "npm:0.18.2"
+    "@grafana/data": "npm:11.6.1"
+    "@grafana/eslint-config": "npm:8.0.0"
+    "@grafana/tsconfig": "npm:2.0.0"
+    "@grafana/ui": "npm:11.6.1"
+    "@rollup/plugin-commonjs": "npm:28.0.3"
+    "@rollup/plugin-node-resolve": "npm:16.0.1"
+    "@stylistic/eslint-plugin-ts": "npm:3.1.0"
+    "@swc/core": "npm:1.15.8"
+    "@swc/jest": "npm:0.2.38"
+    "@testing-library/dom": "npm:10.4.0"
+    "@testing-library/jest-dom": "npm:6.6.3"
+    "@testing-library/react": "npm:16.3.0"
+    "@types/identity-obj-proxy": "npm:3.0.2"
+    "@types/jest": "npm:29.5.14"
+    "@types/lodash": "npm:4.17.16"
     "@types/react": "npm:^18.2.0"
-    "@typescript-eslint/eslint-plugin": "npm:^8.32.1"
-    "@typescript-eslint/parser": "npm:^8.32.1"
-    cspell: "npm:^9.0.1"
-    esbuild: "npm:^0.25.4"
-    eslint: "npm:^8.57.1"
-    eslint-config-prettier: "npm:^10.1.5"
-    eslint-plugin-jsdoc: "npm:^50.6.17"
-    eslint-plugin-react: "npm:^7.37.5"
-    eslint-plugin-react-hooks: "npm:^5.2.0"
-    identity-obj-proxy: "npm:^3.0.0"
-    jest: "npm:^29.7.0"
-    jest-environment-jsdom: "npm:^29.7.0"
-    lodash: "npm:^4.17.21"
-    publint: "npm:^0.3.12"
+    "@typescript-eslint/eslint-plugin": "npm:8.32.1"
+    "@typescript-eslint/parser": "npm:8.32.1"
+    cspell: "npm:9.0.1"
+    esbuild: "npm:0.25.4"
+    eslint: "npm:8.57.1"
+    eslint-config-prettier: "npm:10.1.5"
+    eslint-plugin-jsdoc: "npm:50.6.17"
+    eslint-plugin-react: "npm:7.37.5"
+    eslint-plugin-react-hooks: "npm:5.2.0"
+    identity-obj-proxy: "npm:3.0.0"
+    jest: "npm:29.7.0"
+    jest-environment-jsdom: "npm:29.7.0"
+    lodash: "npm:4.17.23"
+    publint: "npm:0.3.12"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
-    rollup: "npm:^4.40.2"
-    rollup-plugin-dts: "npm:^6.2.1"
-    rollup-plugin-esbuild: "npm:^6.2.1"
-    rollup-plugin-node-externals: "npm:^8.0.0"
-    tslib: "npm:^2.3.0"
-    typescript: "npm:^5.8.3"
+    rollup: "npm:4.40.2"
+    rollup-plugin-dts: "npm:6.2.1"
+    rollup-plugin-esbuild: "npm:6.2.1"
+    rollup-plugin-node-externals: "npm:8.0.0"
+    tslib: "npm:2.8.1"
+    typescript: "npm:5.8.3"
   peerDependencies:
     "@grafana/data": ">=10.4.0"
     "@grafana/ui": ">=10.4.0"
@@ -1619,14 +1619,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/tsconfig@npm:^2.0.0":
+"@grafana/tsconfig@npm:2.0.0, @grafana/tsconfig@npm:^2.0.0":
   version: 2.0.0
   resolution: "@grafana/tsconfig@npm:2.0.0"
   checksum: 10c0/0b00f1ea90ed5014b1261153d0621aec1dcac891d0e0a723cec6280d489576661eb2d39b2a9c38ae261112e99e46e8ffaebfd8681d72363ab2c732c1d287fb11
   languageName: node
   linkType: hard
 
-"@grafana/ui@npm:^11.5.3":
+"@grafana/ui@npm:11.6.1":
   version: 11.6.1
   resolution: "@grafana/ui@npm:11.6.1"
   dependencies:
@@ -2739,7 +2739,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-commonjs@npm:^28.0.3":
+"@rollup/plugin-commonjs@npm:28.0.3":
   version: 28.0.3
   resolution: "@rollup/plugin-commonjs@npm:28.0.3"
   dependencies:
@@ -2759,7 +2759,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-node-resolve@npm:^16.0.1":
+"@rollup/plugin-node-resolve@npm:16.0.1":
   version: 16.0.1
   resolution: "@rollup/plugin-node-resolve@npm:16.0.1"
   dependencies:
@@ -2965,7 +2965,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stylistic/eslint-plugin-ts@npm:^3.1.0":
+"@stylistic/eslint-plugin-ts@npm:3.1.0":
   version: 3.1.0
   resolution: "@stylistic/eslint-plugin-ts@npm:3.1.0"
   dependencies:
@@ -3048,7 +3048,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.15.8":
+"@swc/core@npm:1.15.8":
   version: 1.15.8
   resolution: "@swc/core@npm:1.15.8"
   dependencies:
@@ -3110,7 +3110,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/jest@npm:^0.2.38":
+"@swc/jest@npm:0.2.38":
   version: 0.2.38
   resolution: "@swc/jest@npm:0.2.38"
   dependencies:
@@ -3151,7 +3151,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^10.4.0":
+"@testing-library/dom@npm:10.4.0":
   version: 10.4.0
   resolution: "@testing-library/dom@npm:10.4.0"
   dependencies:
@@ -3167,7 +3167,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/jest-dom@npm:^6.6.3":
+"@testing-library/jest-dom@npm:6.6.3":
   version: 6.6.3
   resolution: "@testing-library/jest-dom@npm:6.6.3"
   dependencies:
@@ -3182,7 +3182,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^16.3.0":
+"@testing-library/react@npm:16.3.0":
   version: 16.3.0
   resolution: "@testing-library/react@npm:16.3.0"
   dependencies:
@@ -3299,7 +3299,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/identity-obj-proxy@npm:^3":
+"@types/identity-obj-proxy@npm:3.0.2":
   version: 3.0.2
   resolution: "@types/identity-obj-proxy@npm:3.0.2"
   checksum: 10c0/9277c7bf75aaf3688b659ad86f33eb57bd9fab9a5ed342adfbab6b6a804b8f7ce2f0a9ce0394dc6e73b3128d61920c5d35d71b825b84bfe28a97f86f5360c7e3
@@ -3331,7 +3331,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^29.5.14":
+"@types/jest@npm:29.5.14":
   version: 29.5.14
   resolution: "@types/jest@npm:29.5.14"
   dependencies:
@@ -3382,7 +3382,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash@npm:^4.17.16":
+"@types/lodash@npm:4.17.16":
   version: 4.17.16
   resolution: "@types/lodash@npm:4.17.16"
   checksum: 10c0/cf017901b8ab1d7aabc86d5189d9288f4f99f19a75caf020c0e2c77b8d4cead4db0d0b842d009b029339f92399f49f34377dd7c2721053388f251778b4c23534
@@ -3514,7 +3514,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^8.32.1":
+"@typescript-eslint/eslint-plugin@npm:8.32.1":
   version: 8.32.1
   resolution: "@typescript-eslint/eslint-plugin@npm:8.32.1"
   dependencies:
@@ -3535,7 +3535,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^8.32.1":
+"@typescript-eslint/parser@npm:8.32.1":
   version: 8.32.1
   resolution: "@typescript-eslint/parser@npm:8.32.1"
   dependencies:
@@ -4642,7 +4642,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cspell@npm:^9.0.1":
+"cspell@npm:9.0.1":
   version: 9.0.1
   resolution: "cspell@npm:9.0.1"
   dependencies:
@@ -5596,7 +5596,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.25.4":
+"esbuild@npm:0.25.4":
   version: 0.25.4
   resolution: "esbuild@npm:0.25.4"
   dependencies:
@@ -5721,7 +5721,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^10.1.5":
+"eslint-config-prettier@npm:10.1.5":
   version: 10.1.5
   resolution: "eslint-config-prettier@npm:10.1.5"
   peerDependencies:
@@ -5732,7 +5732,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^50.6.17":
+"eslint-plugin-jsdoc@npm:50.6.17":
   version: 50.6.17
   resolution: "eslint-plugin-jsdoc@npm:50.6.17"
   dependencies:
@@ -5752,7 +5752,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^5.2.0":
+"eslint-plugin-react-hooks@npm:5.2.0":
   version: 5.2.0
   resolution: "eslint-plugin-react-hooks@npm:5.2.0"
   peerDependencies:
@@ -5761,7 +5761,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.37.5":
+"eslint-plugin-react@npm:7.37.5":
   version: 7.37.5
   resolution: "eslint-plugin-react@npm:7.37.5"
   dependencies:
@@ -5813,7 +5813,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.57.1":
+"eslint@npm:8.57.1":
   version: 8.57.1
   resolution: "eslint@npm:8.57.1"
   dependencies:
@@ -6740,7 +6740,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"identity-obj-proxy@npm:^3.0.0":
+"identity-obj-proxy@npm:3.0.0":
   version: 3.0.0
   resolution: "identity-obj-proxy@npm:3.0.0"
   dependencies:
@@ -7493,7 +7493,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-environment-jsdom@npm:^29.7.0":
+"jest-environment-jsdom@npm:29.7.0":
   version: 29.7.0
   resolution: "jest-environment-jsdom@npm:29.7.0"
   dependencies:
@@ -7797,7 +7797,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest@npm:^29.7.0":
+"jest@npm:29.7.0":
   version: 29.7.0
   resolution: "jest@npm:29.7.0"
   dependencies:
@@ -8064,7 +8064,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.1.1, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
+"lodash@npm:4.17.23, lodash@npm:^4.1.1, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
   version: 4.17.23
   resolution: "lodash@npm:4.17.23"
   checksum: 10c0/1264a90469f5bb95d4739c43eb6277d15b6d9e186df4ac68c3620443160fc669e2f14c11e7d8b2ccf078b81d06147c01a8ccced9aab9f9f63d50dcf8cace6bf6
@@ -9173,7 +9173,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"publint@npm:^0.3.12":
+"publint@npm:0.3.12":
   version: 0.3.12
   resolution: "publint@npm:0.3.12"
   dependencies:
@@ -10023,7 +10023,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-dts@npm:^6.2.1":
+"rollup-plugin-dts@npm:6.2.1":
   version: 6.2.1
   resolution: "rollup-plugin-dts@npm:6.2.1"
   dependencies:
@@ -10039,7 +10039,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-esbuild@npm:^6.2.1":
+"rollup-plugin-esbuild@npm:6.2.1":
   version: 6.2.1
   resolution: "rollup-plugin-esbuild@npm:6.2.1"
   dependencies:
@@ -10054,7 +10054,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup-plugin-node-externals@npm:^8.0.0":
+"rollup-plugin-node-externals@npm:8.0.0":
   version: 8.0.0
   resolution: "rollup-plugin-node-externals@npm:8.0.0"
   peerDependencies:
@@ -10063,7 +10063,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^4.40.2":
+"rollup@npm:4.40.2":
   version: 4.40.2
   resolution: "rollup@npm:4.40.2"
   dependencies:
@@ -11107,7 +11107,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:2.8.1, tslib@npm:^2.1.0, tslib@npm:^2.3.0, tslib@npm:^2.6.2, tslib@npm:^2.7.0, tslib@npm:^2.8.0":
+"tslib@npm:2.8.1, tslib@npm:^2.1.0, tslib@npm:^2.6.2, tslib@npm:^2.7.0, tslib@npm:^2.8.0":
   version: 2.8.1
   resolution: "tslib@npm:2.8.1"
   checksum: 10c0/9c4759110a19c53f992d9aae23aac5ced636e99887b51b9e61def52611732872ff7668757d4e4c61f19691e36f4da981cd9485e869b4a7408d689f6bf1f14e62
@@ -11224,7 +11224,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.8.3":
+"typescript@npm:5.8.3":
   version: 5.8.3
   resolution: "typescript@npm:5.8.3"
   bin:
@@ -11254,7 +11254,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.8.3#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>":
   version: 5.8.3
   resolution: "typescript@patch:typescript@npm%3A5.8.3#optional!builtin<compat/typescript>::version=5.8.3&hash=5786d5"
   bin:

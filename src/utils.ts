@@ -7,18 +7,14 @@ import { type DataSourceOptions, type DataSourceSecureJsonData, GoogleAuthType }
  * If `options.jsonData.authenticationType` is not set, this function returns a new options object
  * with `authenticationType` set to `GoogleAuthType.JWT`. Otherwise, it returns the original options object.
  *
+ * This is a pure function that doesn't cause side effects.
  */
-export const getOptionsWithDefaults = (
-  options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>,
-  onOptionsChange: (options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>) => void
-) => {
+export const getOptionsWithDefaults = (options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>) => {
   if (!options.jsonData.authenticationType) {
-    const newOptions = {
+    return {
       ...options,
       jsonData: { ...options.jsonData, authenticationType: GoogleAuthType.JWT },
     };
-    onOptionsChange(newOptions);
-    return newOptions;
   }
 
   return options;

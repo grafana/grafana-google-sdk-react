@@ -5,7 +5,7 @@ import {
   type SelectableValue,
 } from '@grafana/data';
 import { Field, FieldSet, Input, RadioButtonGroup, Switch } from '@grafana/ui';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { type DataSourceOptions, type DataSourceSecureJsonData, GoogleAuthType } from '../types';
 import { getOptionsWithDefaults } from '../utils';
 import { JWTConfigEditor } from './JWTConfigEditor';
@@ -20,7 +20,7 @@ export interface AuthConfigProps {
 
 export function AuthConfig(props: AuthConfigProps) {
   const { options, onOptionsChange, authOptions, showServiceAccountImpersonationConfig } = props;
-  const { jsonData, secureJsonFields, secureJsonData } = getOptionsWithDefaults(options, onOptionsChange);
+  const { jsonData, secureJsonFields, secureJsonData } = getOptionsWithDefaults(options);
   const getJTWConfig = (): boolean =>
     Boolean(
       jsonData.clientEmail &&
@@ -33,6 +33,17 @@ export function AuthConfig(props: AuthConfigProps) {
   const [configEditorVisible, setConfigEditorVisible] = useState<boolean>(getJTWConfig());
   const [isPasting, setIsPasting] = useState<boolean>(false);
   const [isUploading, setIsUploading] = useState<boolean>(true);
+
+  // Handle setting default authenticationType as a side effect
+  useEffect(() => {
+    if (!options.jsonData.authenticationType) {
+      const newOptions = {
+        ...options,
+        jsonData: { ...options.jsonData, authenticationType: GoogleAuthType.JWT },
+      };
+      onOptionsChange(newOptions);
+    }
+  }, [options.jsonData.authenticationType, options, onOptionsChange]);
 
   const showConfigEditor = (): void => {
     setConfigEditorVisible(true);

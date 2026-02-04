@@ -299,7 +299,7 @@ interface WrapInStateChildrenProps {
 
 interface WrapInStateProps {
   defaultOptions: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>;
-  children: (props: WrapInStateChildrenProps) => JSX.Element;
+  children: (props: WrapInStateChildrenProps) => React.ReactNode;
 }
 
 const WrapInState = ({ defaultOptions, children }: WrapInStateProps) => {

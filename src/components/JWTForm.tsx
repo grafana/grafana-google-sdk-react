@@ -3,12 +3,10 @@ import {
   onUpdateDatasourceJsonDataOption,
   onUpdateDatasourceSecureJsonDataOption,
 } from '@grafana/data';
-import { Button, Field, Input, LegacyForms, SecretInput, useTheme2 } from '@grafana/ui';
+import { Button, Field, Input, SecretInput, useTheme2 } from '@grafana/ui';
 import React from 'react';
 import { TEST_IDS } from '../testIds';
 import { type DataSourceOptions, type DataSourceSecureJsonData } from '../types';
-
-const { SecretFormField } = LegacyForms;
 
 export interface JWTFormProps {
   onReset: () => void;
@@ -116,16 +114,9 @@ export const JWTForm: React.FC<JWTFormProps> = ({ options, onReset, onOptionsCha
       )}
 
       {privateKeyConfig === PrivateKeyConfig.JWT && (
-        <>
-          {/* Backward compatibility check. SecretInput was added in 8.5 */}
-          {!!SecretInput ? (
-            <Field label="Private key" description={Description}>
-              <SecretInput {...privateKeyProps} width={60} />
-            </Field>
-          ) : (
-            <SecretFormField {...privateKeyProps} label="Private key" labelWidth={10} inputWidth={20} />
-          )}
-        </>
+        <Field label="Private key" description={Description}>
+          <SecretInput {...privateKeyProps} width={60} />
+        </Field>
       )}
 
       {

@@ -1,6 +1,6 @@
 import { type DataSourcePluginOptionsEditorProps } from '@grafana/data';
 import { Alert } from '@grafana/ui';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AuthConfig } from './components/AuthConfig';
 import { GOOGLE_AUTH_TYPE_OPTIONS } from './constants';
 import { TEST_IDS } from './testIds';
@@ -10,7 +10,19 @@ import { getOptionsWithDefaults } from './utils';
 export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<DataSourceOptions, DataSourceSecureJsonData>;
 
 export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEditorProps) => {
-  const optionsWithDefault = getOptionsWithDefaults(props.options, props.onOptionsChange);
+  const { options, onOptionsChange } = props;
+  const optionsWithDefault = getOptionsWithDefaults(options);
+
+  // Handle setting default authenticationType as a side effect
+  useEffect(() => {
+    if (!options.jsonData.authenticationType) {
+      const newOptions = {
+        ...options,
+        jsonData: { ...options.jsonData, authenticationType: GoogleAuthType.JWT },
+      };
+      onOptionsChange(newOptions);
+    }
+  }, [options.jsonData.authenticationType, options, onOptionsChange]);
 
   const isJWT =
     optionsWithDefault.jsonData.authenticationType === GoogleAuthType.JWT ||
@@ -20,7 +32,7 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEdito
     <>
       <AuthConfig
         authOptions={GOOGLE_AUTH_TYPE_OPTIONS}
-        onOptionsChange={props.onOptionsChange}
+        onOptionsChange={onOptionsChange}
         showServiceAccountImpersonationConfig={true}
         options={optionsWithDefault}
       />

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>grafana/grafana-renovate-config//presets/base",
+    "github>grafana/grafana-renovate-config//presets/npm",
+    "github>grafana/grafana-renovate-config//presets/automerge",
+    ":preserveSemverRanges"
+  ],
+  "packageRules": [
+    {
+      "description": "Automerge minor dependencies",
+      "matchUpdateTypes": ["minor"],
+      "automerge": true,
+      "labels": ["automerge-minor"]
+    }
+  ]
+}

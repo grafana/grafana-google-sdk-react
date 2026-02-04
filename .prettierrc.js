@@ -1,7 +1,7 @@
 export default {
-  endOfLine: "auto",
+  endOfLine: 'auto',
   printWidth: 120,
-  trailingComma: "es5",
+  trailingComma: 'es5',
   semi: true,
   jsxSingleQuote: false,
   singleQuote: true,

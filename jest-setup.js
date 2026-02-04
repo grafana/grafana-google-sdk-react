@@ -1,7 +1,7 @@
-import { TextEncoder } from "util";
-import "@testing-library/jest-dom";
+import { TextEncoder } from 'util';
+import '@testing-library/jest-dom';
 
-Object.defineProperty(global, "matchMedia", {
+Object.defineProperty(global, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
     matches: false,

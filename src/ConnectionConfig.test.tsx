@@ -1,13 +1,9 @@
-import { type DataSourceSettings } from "@grafana/data";
-import { fireEvent, render, screen } from "@testing-library/react";
-import React, { useState } from "react";
-import { ConnectionConfig } from "./ConnectionConfig";
-import { TEST_IDS } from "./testIds";
-import {
-  type DataSourceOptions,
-  type DataSourceSecureJsonData,
-  GoogleAuthType,
-} from "./types";
+import { type DataSourceSettings } from '@grafana/data';
+import { fireEvent, render, screen } from '@testing-library/react';
+import React, { useState } from 'react';
+import { ConnectionConfig } from './ConnectionConfig';
+import { TEST_IDS } from './testIds';
+import { type DataSourceOptions, type DataSourceSecureJsonData, GoogleAuthType } from './types';
 
 const TOKEN_MOCK = `{
   "type": "service_account",
@@ -25,20 +21,19 @@ const TOKEN_MOCK = `{
 
 const makeJsonData: (
   authenticationType?: (typeof GoogleAuthType)[keyof typeof GoogleAuthType]
-) => DataSourceSettings<
-  DataSourceOptions,
-  DataSourceSecureJsonData
->["jsonData"] = (authenticationType = GoogleAuthType.JWT) => {
+) => DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>['jsonData'] = (
+  authenticationType = GoogleAuthType.JWT
+) => {
   return Object.freeze({
     authenticationType,
-    clientEmail: "test@grafana.com",
-    tokenUri: "https://accounts.google.com/o/oauth2/token",
-    defaultProject: "test-project",
+    clientEmail: 'test@grafana.com',
+    tokenUri: 'https://accounts.google.com/o/oauth2/token',
+    defaultProject: 'test-project',
   });
 };
 
-describe("ConnectionConfig", () => {
-  it("renders help box", () => {
+describe('ConnectionConfig', () => {
+  it('renders help box', () => {
     render(
       <ConnectionConfig
         options={
@@ -53,7 +48,7 @@ describe("ConnectionConfig", () => {
     expect(screen.queryByTestId(TEST_IDS.helpBox)).toBeInTheDocument();
   });
 
-  it("renders drop zone by default", () => {
+  it('renders drop zone by default', () => {
     render(
       <ConnectionConfig
         options={
@@ -68,7 +63,7 @@ describe("ConnectionConfig", () => {
     expect(screen.queryByTestId(TEST_IDS.dropZone)).toBeInTheDocument();
   });
 
-  it("renders JWT paste area when button clicked", () => {
+  it('renders JWT paste area when button clicked', () => {
     const { getByTestId } = render(
       <ConnectionConfig
         options={
@@ -85,34 +80,27 @@ describe("ConnectionConfig", () => {
     expect(screen.queryByTestId(TEST_IDS.pasteArea)).toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.dropZone)).not.toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.uploadJwtButton)).toBeInTheDocument();
-    expect(
-      screen.queryByTestId(TEST_IDS.fillJwtManuallyButton)
-    ).toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.fillJwtManuallyButton)).toBeInTheDocument();
   });
 
-  it("renders private key path input when link is clicked", () => {
+  it('renders private key path input when link is clicked', () => {
     const { getByTestId } = render(
       <WrapInState
         defaultOptions={
           {
             jsonData: {
-              clientEmail: "test@grafana.com",
-              tokenUri: "https://accounts.google.com/o/oauth2/token",
-              defaultProject: "test-project",
+              clientEmail: 'test@grafana.com',
+              tokenUri: 'https://accounts.google.com/o/oauth2/token',
+              defaultProject: 'test-project',
             },
             secureJsonFields: {
               privateKey: true,
             },
-          } as unknown as DataSourceSettings<
-            DataSourceOptions,
-            DataSourceSecureJsonData
-          >
+          } as unknown as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
       >
         {({ options, setOptions }) => {
-          return (
-            <ConnectionConfig options={options} onOptionsChange={setOptions} />
-          );
+          return <ConnectionConfig options={options} onOptionsChange={setOptions} />;
         }}
       </WrapInState>
     );
@@ -122,17 +110,13 @@ describe("ConnectionConfig", () => {
     const togglePublicKeyPathLink = getByTestId(TEST_IDS.linkPrivateKeyPath);
     fireEvent.click(togglePublicKeyPathLink);
 
-    expect(
-      screen.queryByTestId(TEST_IDS.privateKeyInput)
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByTestId(TEST_IDS.privateKeyPathInput)
-    ).toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.privateKeyInput)).not.toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.privateKeyPathInput)).toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.uploadJwtButton)).toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.pasteJwtButton)).toBeInTheDocument();
   });
 
-  it("renders JWT form when token is pasted", () => {
+  it('renders JWT form when token is pasted', () => {
     const { getByTestId } = render(
       <WrapInState
         defaultOptions={
@@ -142,9 +126,7 @@ describe("ConnectionConfig", () => {
         }
       >
         {({ options, setOptions }) => {
-          return (
-            <ConnectionConfig options={options} onOptionsChange={setOptions} />
-          );
+          return <ConnectionConfig options={options} onOptionsChange={setOptions} />;
         }}
       </WrapInState>
     );
@@ -161,7 +143,7 @@ describe("ConnectionConfig", () => {
     expect(screen.queryByTestId(TEST_IDS.jwtForm)).toBeInTheDocument();
   });
 
-  it("renders drop zone on JWT token reset", () => {
+  it('renders drop zone on JWT token reset', () => {
     const jsonData = makeJsonData();
     const { getByText } = render(
       <WrapInState
@@ -171,16 +153,11 @@ describe("ConnectionConfig", () => {
             secureJsonFields: {
               privateKey: true,
             },
-          } as unknown as DataSourceSettings<
-            DataSourceOptions,
-            DataSourceSecureJsonData
-          >
+          } as unknown as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
       >
         {({ options, setOptions }) => {
-          return (
-            <ConnectionConfig options={options} onOptionsChange={setOptions} />
-          );
+          return <ConnectionConfig options={options} onOptionsChange={setOptions} />;
         }}
       </WrapInState>
     );
@@ -189,7 +166,7 @@ describe("ConnectionConfig", () => {
     expect(screen.queryByTestId(TEST_IDS.dropZone)).not.toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.pasteArea)).not.toBeInTheDocument();
 
-    const resetButton = getByText("Reset");
+    const resetButton = getByText('Reset');
     fireEvent.click(resetButton);
 
     expect(screen.queryByTestId(TEST_IDS.jwtForm)).not.toBeInTheDocument();
@@ -197,7 +174,7 @@ describe("ConnectionConfig", () => {
     expect(screen.queryByTestId(TEST_IDS.dropZone)).toBeInTheDocument();
   });
 
-  it("renders JWT form when data is provided", () => {
+  it('renders JWT form when data is provided', () => {
     const jsonData = makeJsonData();
     render(
       <ConnectionConfig
@@ -207,10 +184,7 @@ describe("ConnectionConfig", () => {
             secureJsonFields: {
               privateKey: true,
             },
-          } as unknown as DataSourceSettings<
-            DataSourceOptions,
-            DataSourceSecureJsonData
-          >
+          } as unknown as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
         onOptionsChange={() => {}}
       />
@@ -221,23 +195,20 @@ describe("ConnectionConfig", () => {
     expect(screen.queryByTestId(TEST_IDS.dropZone)).not.toBeInTheDocument();
   });
 
-  it("renders JWT form when data is provided (with private key)", () => {
+  it('renders JWT form when data is provided (with private key)', () => {
     render(
       <ConnectionConfig
         options={
           {
             jsonData: {
-              clientEmail: "test@grafana.com",
-              tokenUri: "https://accounts.google.com/o/oauth2/token",
-              defaultProject: "test-project",
+              clientEmail: 'test@grafana.com',
+              tokenUri: 'https://accounts.google.com/o/oauth2/token',
+              defaultProject: 'test-project',
             },
             secureJsonFields: {
               privateKey: true,
             },
-          } as unknown as DataSourceSettings<
-            DataSourceOptions,
-            DataSourceSecureJsonData
-          >
+          } as unknown as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
         onOptionsChange={() => {}}
       />
@@ -247,44 +218,35 @@ describe("ConnectionConfig", () => {
     expect(screen.queryByTestId(TEST_IDS.privateKeyInput)).toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.pasteArea)).not.toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.dropZone)).not.toBeInTheDocument();
-    expect(
-      screen.queryByTestId(TEST_IDS.privateKeyPathInput)
-    ).not.toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.privateKeyPathInput)).not.toBeInTheDocument();
   });
 
-  it("renders JWT form when data is provided (with private key path)", () => {
+  it('renders JWT form when data is provided (with private key path)', () => {
     render(
       <ConnectionConfig
         options={
           {
             jsonData: {
-              clientEmail: "test@grafana.com",
-              tokenUri: "https://accounts.google.com/o/oauth2/token",
-              defaultProject: "test-project",
-              privateKeyPath: "private/key/path",
+              clientEmail: 'test@grafana.com',
+              tokenUri: 'https://accounts.google.com/o/oauth2/token',
+              defaultProject: 'test-project',
+              privateKeyPath: 'private/key/path',
             },
             secureJsonFields: {},
-          } as unknown as DataSourceSettings<
-            DataSourceOptions,
-            DataSourceSecureJsonData
-          >
+          } as unknown as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
         onOptionsChange={() => {}}
       />
     );
 
     expect(screen.queryByTestId(TEST_IDS.jwtForm)).toBeInTheDocument();
-    expect(
-      screen.queryByTestId(TEST_IDS.privateKeyPathInput)
-    ).toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.privateKeyPathInput)).toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.pasteArea)).not.toBeInTheDocument();
     expect(screen.queryByTestId(TEST_IDS.dropZone)).not.toBeInTheDocument();
-    expect(
-      screen.queryByTestId(TEST_IDS.privateKeyInput)
-    ).not.toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.privateKeyInput)).not.toBeInTheDocument();
   });
 
-  it("preserves service account credentials when changing auth type", () => {
+  it('preserves service account credentials when changing auth type', () => {
     const onOptionsChangeSpy = jest.fn();
     const jsonData = makeJsonData();
     const expectedJsonData = makeJsonData(GoogleAuthType.GCE);
@@ -295,10 +257,7 @@ describe("ConnectionConfig", () => {
           {
             secureJsonData: {},
             jsonData,
-          } as unknown as DataSourceSettings<
-            DataSourceOptions,
-            DataSourceSecureJsonData
-          >
+          } as unknown as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
         onOptionsChange={onOptionsChangeSpy}
       />
@@ -313,7 +272,7 @@ describe("ConnectionConfig", () => {
     });
   });
 
-  it("makes sure JWT is selected by default", () => {
+  it('makes sure JWT is selected by default', () => {
     const onOptionsChangeSpy = jest.fn();
     const jsonData = Object.freeze({});
 
@@ -323,34 +282,24 @@ describe("ConnectionConfig", () => {
           {
             secureJsonData: {},
             jsonData,
-          } as unknown as DataSourceSettings<
-            DataSourceOptions,
-            DataSourceSecureJsonData
-          >
+          } as unknown as DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
         }
         onOptionsChange={onOptionsChangeSpy}
       />
     );
 
-    expect(
-      screen.queryByTestId(TEST_IDS.fillJwtManuallyButton)
-    ).toBeInTheDocument();
+    expect(screen.queryByTestId(TEST_IDS.fillJwtManuallyButton)).toBeInTheDocument();
   });
 });
 
 interface WrapInStateChildrenProps {
   options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>;
-  setOptions: (
-    options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
-  ) => void;
+  setOptions: (options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>) => void;
 }
 
 interface WrapInStateProps {
-  defaultOptions: DataSourceSettings<
-    DataSourceOptions,
-    DataSourceSecureJsonData
-  >;
-  children: (props: WrapInStateChildrenProps) => JSX.Element;
+  defaultOptions: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>;
+  children: (props: WrapInStateChildrenProps) => React.ReactNode;
 }
 
 const WrapInState = ({ defaultOptions, children }: WrapInStateProps) => {

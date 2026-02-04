@@ -3,53 +3,47 @@ import {
   onUpdateDatasourceJsonDataOption,
   onUpdateDatasourceJsonDataOptionChecked,
   type SelectableValue,
-} from "@grafana/data";
-import { Field, FieldSet, Input, RadioButtonGroup, Switch } from "@grafana/ui";
-import React, { useState } from "react";
-import {
-  type DataSourceOptions,
-  type DataSourceSecureJsonData,
-  GoogleAuthType,
-} from "../types";
-import { getOptionsWithDefaults } from "../utils";
-import { JWTConfigEditor } from "./JWTConfigEditor";
-import { JWTForm } from "./JWTForm";
+} from '@grafana/data';
+import { Field, FieldSet, Input, RadioButtonGroup, Switch } from '@grafana/ui';
+import React, { useEffect, useState } from 'react';
+import { type DataSourceOptions, type DataSourceSecureJsonData, GoogleAuthType } from '../types';
+import { getOptionsWithDefaults } from '../utils';
+import { JWTConfigEditor } from './JWTConfigEditor';
+import { JWTForm } from './JWTForm';
 
 export interface AuthConfigProps {
   authOptions: SelectableValue[];
   options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>;
-  onOptionsChange: (
-    options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>
-  ) => void;
+  onOptionsChange: (options: DataSourceSettings<DataSourceOptions, DataSourceSecureJsonData>) => void;
   showServiceAccountImpersonationConfig?: boolean;
 }
 
 export function AuthConfig(props: AuthConfigProps) {
-  const {
-    options,
-    onOptionsChange,
-    authOptions,
-    showServiceAccountImpersonationConfig,
-  } = props;
-  const { jsonData, secureJsonFields, secureJsonData } =
-    getOptionsWithDefaults(options, onOptionsChange);
+  const { options, onOptionsChange, authOptions, showServiceAccountImpersonationConfig } = props;
+  const { jsonData, secureJsonFields, secureJsonData } = getOptionsWithDefaults(options);
   const getJTWConfig = (): boolean =>
     Boolean(
       jsonData.clientEmail &&
-        jsonData.defaultProject &&
-        jsonData.tokenUri &&
-        ((secureJsonFields && secureJsonFields.privateKey) ||
-          jsonData.privateKeyPath)
+      jsonData.defaultProject &&
+      jsonData.tokenUri &&
+      ((secureJsonFields && secureJsonFields.privateKey) || jsonData.privateKeyPath)
     );
 
-  const [jwtAuth, setJWTAuth] = useState<boolean>(
-    isJWTAuth(jsonData.authenticationType)
-  );
-  const [configEditorVisible, setConfigEditorVisible] = useState<boolean>(
-    getJTWConfig()
-  );
+  const [jwtAuth, setJWTAuth] = useState<boolean>(isJWTAuth(jsonData.authenticationType));
+  const [configEditorVisible, setConfigEditorVisible] = useState<boolean>(getJTWConfig());
   const [isPasting, setIsPasting] = useState<boolean>(false);
   const [isUploading, setIsUploading] = useState<boolean>(true);
+
+  // Handle setting default authenticationType as a side effect
+  useEffect(() => {
+    if (!options.jsonData.authenticationType) {
+      const newOptions = {
+        ...options,
+        jsonData: { ...options.jsonData, authenticationType: GoogleAuthType.JWT },
+      };
+      onOptionsChange(newOptions);
+    }
+  }, [options.jsonData.authenticationType, options, onOptionsChange]);
 
   const showConfigEditor = (): void => {
     setConfigEditorVisible(true);
@@ -78,9 +72,7 @@ export function AuthConfig(props: AuthConfigProps) {
 
   const onResetApiKey = (jsonData?: Partial<DataSourceOptions>) => {
     const nextSecureJsonData = { ...secureJsonData };
-    const nextJsonData = !jsonData
-      ? { ...options.jsonData }
-      : { ...options.jsonData, ...jsonData };
+    const nextJsonData = !jsonData ? { ...options.jsonData } : { ...options.jsonData, ...jsonData };
 
     delete nextJsonData.clientEmail;
     delete nextJsonData.defaultProject;
@@ -144,7 +136,7 @@ export function AuthConfig(props: AuthConfigProps) {
                 });
               }}
             />
-          )}{" "}
+          )}{' '}
         </FieldSet>
       )}
 
@@ -153,8 +145,8 @@ export function AuthConfig(props: AuthConfigProps) {
           <Input
             id="defaultProject"
             width={60}
-            value={options.jsonData.defaultProject || ""}
-            onChange={onUpdateDatasourceJsonDataOption(props, "defaultProject")}
+            value={options.jsonData.defaultProject || ''}
+            onChange={onUpdateDatasourceJsonDataOption(props, 'defaultProject')}
           />
         </Field>
       )}
@@ -165,7 +157,7 @@ export function AuthConfig(props: AuthConfigProps) {
             htmlFor="usingImpersonation"
             description={
               <span>
-                Read more about service account impersonation{" "}
+                Read more about service account impersonation{' '}
                 <a
                   href="https://cloud.google.com/iam/docs/service-account-impersonation"
                   rel="noreferrer"
@@ -179,26 +171,17 @@ export function AuthConfig(props: AuthConfigProps) {
           >
             <Switch
               value={options.jsonData.usingImpersonation || false}
-              onChange={onUpdateDatasourceJsonDataOptionChecked(
-                props,
-                "usingImpersonation"
-              )}
+              onChange={onUpdateDatasourceJsonDataOptionChecked(props, 'usingImpersonation')}
               id="usingImpersonation"
             />
           </Field>
           {options.jsonData.usingImpersonation && (
-            <Field
-              label="Service account to impersonate"
-              htmlFor="serviceAccountToImpersonate"
-            >
+            <Field label="Service account to impersonate" htmlFor="serviceAccountToImpersonate">
               <Input
                 id="serviceAccountToImpersonate"
                 width={60}
-                value={options.jsonData.serviceAccountToImpersonate || ""}
-                onChange={onUpdateDatasourceJsonDataOption(
-                  props,
-                  "serviceAccountToImpersonate"
-                )}
+                value={options.jsonData.serviceAccountToImpersonate || ''}
+                onChange={onUpdateDatasourceJsonDataOption(props, 'serviceAccountToImpersonate')}
               />
             </Field>
           )}
@@ -209,8 +192,5 @@ export function AuthConfig(props: AuthConfigProps) {
 }
 
 const isJWTAuth = (authenticationType: string): boolean => {
-  return (
-    authenticationType === GoogleAuthType.JWT ||
-    authenticationType === undefined
-  );
+  return authenticationType === GoogleAuthType.JWT || authenticationType === undefined;
 };

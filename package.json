@@ -44,8 +44,8 @@
   "peerDependencies": {
     "@grafana/data": ">=11.6.0",
     "@grafana/ui": ">=11.6.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
@@ -64,7 +64,7 @@
     "@types/identity-obj-proxy": "3.0.2",
     "@types/jest": "30.0.0",
     "@types/lodash": "4.17.23",
-    "@types/react": "18.3.27",
+    "@types/react": "19.2.10",
     "@typescript-eslint/eslint-plugin": "8.54.0",
     "@typescript-eslint/parser": "8.54.0",
     "cspell": "9.6.4",
@@ -81,8 +81,8 @@
     "lodash": "4.17.23",
     "prettier": "3.8.1",
     "publint": "0.3.17",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "rollup": "4.57.1",
     "rollup-plugin-dts": "6.3.0",
     "rollup-plugin-esbuild": "6.2.1",

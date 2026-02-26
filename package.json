@@ -67,7 +67,7 @@
     "@types/react": "18.3.28",
     "@typescript-eslint/eslint-plugin": "8.56.0",
     "@typescript-eslint/parser": "8.56.0",
-    "cspell": "9.6.4",
+    "cspell": "9.7.0",
     "esbuild": "0.27.3",
     "eslint": "9.39.3",
     "eslint-config-prettier": "10.1.8",

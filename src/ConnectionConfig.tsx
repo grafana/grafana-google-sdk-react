@@ -1,17 +1,23 @@
 import { type DataSourcePluginOptionsEditorProps } from '@grafana/data';
 import { Alert } from '@grafana/ui';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { AuthConfig } from './components/AuthConfig';
-import { GOOGLE_AUTH_TYPE_OPTIONS } from './constants';
+import { GOOGLE_AUTH_TYPE_OPTIONS, WIF_AUTH_TYPE_OPTION } from './constants';
 import { TEST_IDS } from './testIds';
 import { type DataSourceOptions, type DataSourceSecureJsonData, GoogleAuthType } from './types';
 import { getOptionsWithDefaults } from './utils';
 
-export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<DataSourceOptions, DataSourceSecureJsonData>;
+export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<DataSourceOptions, DataSourceSecureJsonData> & {
+  enableWIF?: boolean;
+};
 
 export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEditorProps) => {
-  const { options, onOptionsChange } = props;
+  const { options, onOptionsChange, enableWIF } = props;
   const optionsWithDefault = getOptionsWithDefaults(options);
+  const authOptions = useMemo(
+    () => (enableWIF ? [...GOOGLE_AUTH_TYPE_OPTIONS, WIF_AUTH_TYPE_OPTION] : GOOGLE_AUTH_TYPE_OPTIONS),
+    [enableWIF]
+  );
 
   // Handle setting default authenticationType as a side effect
   useEffect(() => {
@@ -24,14 +30,12 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEdito
     }
   }, [options.jsonData.authenticationType, options, onOptionsChange]);
 
-  const isJWT =
-    optionsWithDefault.jsonData.authenticationType === GoogleAuthType.JWT ||
-    optionsWithDefault.jsonData.authenticationType === undefined;
+  const isGCE = optionsWithDefault.jsonData.authenticationType === GoogleAuthType.GCE;
 
   return (
     <>
       <AuthConfig
-        authOptions={GOOGLE_AUTH_TYPE_OPTIONS}
+        authOptions={authOptions}
         onOptionsChange={onOptionsChange}
         showServiceAccountImpersonationConfig={true}
         options={optionsWithDefault}
@@ -49,7 +53,7 @@ export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEdito
           </a>
         </p>
       </div>
-      {!isJWT && (
+      {isGCE && (
         <Alert title="" severity="info">
           Verify GCE default service account by clicking Save & Test
         </Alert>

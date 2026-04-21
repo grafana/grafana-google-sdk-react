@@ -10,6 +10,7 @@ import { type DataSourceOptions, type DataSourceSecureJsonData, GoogleAuthType }
 import { getOptionsWithDefaults } from '../utils';
 import { JWTConfigEditor } from './JWTConfigEditor';
 import { JWTForm } from './JWTForm';
+import { WIFConfigEditor } from './WIFConfigEditor';
 
 export interface AuthConfigProps {
   authOptions: SelectableValue[];
@@ -149,6 +150,11 @@ export function AuthConfig(props: AuthConfigProps) {
             onChange={onUpdateDatasourceJsonDataOption(props, 'defaultProject')}
           />
         </Field>
+      )}
+      {jsonData.authenticationType === GoogleAuthType.WIF && (
+        <FieldSet label="Workload Identity Federation">
+          <WIFConfigEditor options={options} onOptionsChange={onOptionsChange} />
+        </FieldSet>
       )}
       {showServiceAccountImpersonationConfig && (
         <FieldSet label="Service account impersonation">

@@ -13,3 +13,9 @@ export const GOOGLE_AUTH_TYPE_OPTIONS = [
     ariaLabel: TEST_IDS.authTypeButtonGCE,
   },
 ];
+
+export const WIF_AUTH_TYPE_OPTION = {
+  label: 'Workload Identity Federation',
+  value: GoogleAuthType.WIF,
+  ariaLabel: TEST_IDS.authTypeButtonWIF,
+};

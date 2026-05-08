@@ -1793,7 +1793,7 @@ __metadata:
     jest-environment-jsdom: "npm:30.3.0"
     lodash: "npm:4.18.1"
     prettier: "npm:3.8.3"
-    publint: "npm:0.3.18"
+    publint: "npm:0.3.19"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
     rollup: "npm:4.60.2"
@@ -9460,9 +9460,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"publint@npm:0.3.18":
-  version: 0.3.18
-  resolution: "publint@npm:0.3.18"
+"publint@npm:0.3.19":
+  version: 0.3.19
+  resolution: "publint@npm:0.3.19"
   dependencies:
     "@publint/pack": "npm:^0.1.4"
     package-manager-detector: "npm:^1.6.0"
@@ -9470,7 +9470,7 @@ __metadata:
     sade: "npm:^1.8.1"
   bin:
     publint: src/cli.js
-  checksum: 10c0/bdbc3bb07c23fc49abfb2ce50b8673afd50389bc772a8b3a51837a3a979991c7ca1c0f9063d0e57fb233c8ad0bb14218590751fce6699a5397737943ff0520dd
+  checksum: 10c0/1436ac33f40a2db7c8d632026a7ec19e604af54cfc816d37250bf9db303e53ed879f3bfc36208a0696bd30778a14507a5e06fbf2a153f2902feafb6835cc8ac8
   languageName: node
   linkType: hard
 

@@ -4,6 +4,7 @@ export const GoogleAuthType = {
   JWT: 'jwt',
   GCE: 'gce',
   WIF: 'workloadIdentityFederation',
+  OAUTH_PASSTHROUGH: 'oauthPassthrough',
 } as const;
 
 export interface DataSourceOptions extends DataSourceJsonData {
@@ -16,6 +17,7 @@ export interface DataSourceOptions extends DataSourceJsonData {
   usingImpersonation?: boolean;
   workloadIdentityPoolProvider?: string;
   wifServiceAccountEmail?: string;
+  oauthPassThru?: boolean;
 }
 
 export interface DataSourceSecureJsonData {

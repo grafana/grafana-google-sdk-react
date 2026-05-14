@@ -19,3 +19,9 @@ export const WIF_AUTH_TYPE_OPTION = {
   value: GoogleAuthType.WIF,
   ariaLabel: TEST_IDS.authTypeButtonWIF,
 };
+
+export const OAUTH_PASSTHROUGH_AUTH_TYPE_OPTION = {
+  label: 'Forward OAuth Identity',
+  value: GoogleAuthType.OAUTH_PASSTHROUGH,
+  ariaLabel: TEST_IDS.authTypeButtonOAuthPassthrough,
+};

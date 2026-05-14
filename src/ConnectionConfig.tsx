@@ -2,21 +2,26 @@ import { type DataSourcePluginOptionsEditorProps } from '@grafana/data';
 import { Alert } from '@grafana/ui';
 import React, { useEffect, useMemo } from 'react';
 import { AuthConfig } from './components/AuthConfig';
-import { GOOGLE_AUTH_TYPE_OPTIONS, WIF_AUTH_TYPE_OPTION } from './constants';
+import { GOOGLE_AUTH_TYPE_OPTIONS, OAUTH_PASSTHROUGH_AUTH_TYPE_OPTION, WIF_AUTH_TYPE_OPTION } from './constants';
 import { TEST_IDS } from './testIds';
 import { type DataSourceOptions, type DataSourceSecureJsonData, GoogleAuthType } from './types';
 import { getOptionsWithDefaults } from './utils';
 
 export type ConfigEditorProps = DataSourcePluginOptionsEditorProps<DataSourceOptions, DataSourceSecureJsonData> & {
   enableWIF?: boolean;
+  enableOAuthPassthrough?: boolean;
 };
 
 export const ConnectionConfig: React.FC<ConfigEditorProps> = (props: ConfigEditorProps) => {
-  const { options, onOptionsChange, enableWIF } = props;
+  const { options, onOptionsChange, enableWIF, enableOAuthPassthrough } = props;
   const optionsWithDefault = getOptionsWithDefaults(options);
   const authOptions = useMemo(
-    () => (enableWIF ? [...GOOGLE_AUTH_TYPE_OPTIONS, WIF_AUTH_TYPE_OPTION] : GOOGLE_AUTH_TYPE_OPTIONS),
-    [enableWIF]
+    () => [
+      ...GOOGLE_AUTH_TYPE_OPTIONS,
+      ...(enableWIF ? [WIF_AUTH_TYPE_OPTION] : []),
+      ...(enableOAuthPassthrough ? [OAUTH_PASSTHROUGH_AUTH_TYPE_OPTION] : []),
+    ],
+    [enableWIF, enableOAuthPassthrough]
   );
 
   // Handle setting default authenticationType as a side effect

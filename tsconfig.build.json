@@ -3,6 +3,7 @@
   "compilerOptions": {
     "declarationDir": "./compiled",
     "emitDeclarationOnly": true,
+    "rootDir": "./src",
     "noEmit": false
   },
   "exclude": [

@@ -70,7 +70,7 @@ export function AuthConfig(props: AuthConfigProps) {
       jsonData: {
         ...options.jsonData,
         authenticationType,
-        oauthPassThru: authenticationType === GoogleAuthType.OAUTH_PASSTHROUGH || authenticationType === GoogleAuthType.WIF,
+        oauthPassThru: authenticationType === GoogleAuthType.ForwardOAuthIdentity || authenticationType === GoogleAuthType.WIF,
       },
     });
     setJWTAuth(isJWTAuth(authenticationType));
@@ -161,12 +161,12 @@ export function AuthConfig(props: AuthConfigProps) {
           <WIFConfigEditor options={options} onOptionsChange={onOptionsChange} />
         </FieldSet>
       )}
-      {jsonData.authenticationType === GoogleAuthType.OAUTH_PASSTHROUGH && (
+      {jsonData.authenticationType === GoogleAuthType.ForwardOAuthIdentity && (
         <FieldSet label="Forward OAuth Identity">
           <OAuthPassthroughConfigEditor options={options} onOptionsChange={onOptionsChange} />
         </FieldSet>
       )}
-      {showServiceAccountImpersonationConfig && jsonData.authenticationType !== GoogleAuthType.OAUTH_PASSTHROUGH && (
+      {showServiceAccountImpersonationConfig && jsonData.authenticationType !== GoogleAuthType.ForwardOAuthIdentity && (
         <FieldSet label="Service account impersonation">
           <Field
             label="Enable"

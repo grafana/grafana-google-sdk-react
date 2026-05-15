@@ -29,6 +29,7 @@ const makeJsonData: (
     clientEmail: 'test@grafana.com',
     tokenUri: 'https://accounts.google.com/o/oauth2/token',
     defaultProject: 'test-project',
+    oauthPassThru: authenticationType === GoogleAuthType.ForwardOAuthIdentity,
   });
 };
 

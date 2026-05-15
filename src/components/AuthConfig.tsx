@@ -10,6 +10,7 @@ import { type DataSourceOptions, type DataSourceSecureJsonData, GoogleAuthType }
 import { getOptionsWithDefaults } from '../utils';
 import { JWTConfigEditor } from './JWTConfigEditor';
 import { JWTForm } from './JWTForm';
+import { OAuthPassthroughConfigEditor } from './OAuthPassthroughConfigEditor';
 import { WIFConfigEditor } from './WIFConfigEditor';
 
 export interface AuthConfigProps {
@@ -66,7 +67,12 @@ export function AuthConfig(props: AuthConfigProps) {
     setConfigEditorVisible(getJTWConfig());
     onOptionsChange({
       ...options,
-      jsonData: { ...options.jsonData, authenticationType },
+      jsonData: {
+        ...options.jsonData,
+        authenticationType,
+        oauthPassThru:
+          authenticationType === GoogleAuthType.ForwardOAuthIdentity || authenticationType === GoogleAuthType.WIF,
+      },
     });
     setJWTAuth(isJWTAuth(authenticationType));
   };
@@ -156,7 +162,12 @@ export function AuthConfig(props: AuthConfigProps) {
           <WIFConfigEditor options={options} onOptionsChange={onOptionsChange} />
         </FieldSet>
       )}
-      {showServiceAccountImpersonationConfig && (
+      {jsonData.authenticationType === GoogleAuthType.ForwardOAuthIdentity && (
+        <FieldSet label="Forward OAuth Identity">
+          <OAuthPassthroughConfigEditor options={options} onOptionsChange={onOptionsChange} />
+        </FieldSet>
+      )}
+      {showServiceAccountImpersonationConfig && jsonData.authenticationType !== GoogleAuthType.ForwardOAuthIdentity && (
         <FieldSet label="Service account impersonation">
           <Field
             label="Enable"

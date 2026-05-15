@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.6.0
+
+- Add Forward OAuth Identity auth type, opt-in via the new `enableOAuthPassthrough` prop on `ConnectionConfig`. Introduces `GoogleAuthType.ForwardOAuthIdentity`, an `oauthPassThru` field on `DataSourceOptions`, an `OAuthPassthroughConfigEditor` component that captures the required default project, and an `OAUTH_PASSTHROUGH_AUTH_TYPE_OPTION` constant for consumers composing their own auth option list.
+
 ## v0.5.0
 
 - Add Workload Identity Federation (WIF) auth type, opt-in via the new `enableWIF` prop on `ConnectionConfig`. Introduces `GoogleAuthType.WIF`, `workloadIdentityPoolProvider` and `wifServiceAccountEmail` fields on `DataSourceOptions`, a `WIFConfigEditor` component, and a `WIF_AUTH_TYPE_OPTION` constant for consumers composing their own auth option list.

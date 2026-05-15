@@ -5,3 +5,4 @@ ci/
 dist/
 compiled/
 .yarn/install-state.gz
+package.tgz

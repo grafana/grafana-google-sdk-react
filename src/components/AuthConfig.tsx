@@ -70,7 +70,8 @@ export function AuthConfig(props: AuthConfigProps) {
       jsonData: {
         ...options.jsonData,
         authenticationType,
-        oauthPassThru: authenticationType === GoogleAuthType.ForwardOAuthIdentity || authenticationType === GoogleAuthType.WIF,
+        oauthPassThru:
+          authenticationType === GoogleAuthType.ForwardOAuthIdentity || authenticationType === GoogleAuthType.WIF,
       },
     });
     setJWTAuth(isJWTAuth(authenticationType));

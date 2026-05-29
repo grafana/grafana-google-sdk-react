@@ -1,7 +1,4 @@
 name: publish-npm
-permissions:
-  contents: read
-  id-token: write # needed for Trusted Publishing
 
 on:
   push:
@@ -10,6 +7,9 @@ on:
 
 jobs:
   publish:
+    permissions:
+      contents: read
+      id-token: write # needed for Trusted Publishing
     name: Publish to NPM Package Registry
     runs-on: ubuntu-latest
     steps:

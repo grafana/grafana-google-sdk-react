@@ -1,5 +1,4 @@
 import { Button, Field, FileDropzone, TextArea, useTheme2 } from '@grafana/ui';
-import { isObject } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { TEST_IDS } from '../testIds';
 
@@ -180,7 +179,7 @@ export const JWTConfigEditor: React.FC<JWTConfigEditorProps> = ({
 };
 
 const validateJWT = (json: Record<string, string>): { isValid: boolean; error?: string } => {
-  if (!isObject(json)) {
+  if (!json || typeof json !== 'object') {
     return { isValid: false, error: 'Invalid JWT token' };
   }
   const missingKeys = configKeys.filter((key) => !json[key]);

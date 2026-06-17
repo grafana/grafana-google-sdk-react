@@ -1764,7 +1764,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.18.3"
     "@grafana/data": "npm:13.0.1"
     "@grafana/eslint-config": "npm:9.0.0"
-    "@grafana/tsconfig": "npm:2.1.0"
+    "@grafana/tsconfig": "npm:2.2.0"
     "@grafana/ui": "npm:13.0.1"
     "@rollup/plugin-commonjs": "npm:29.0.3"
     "@rollup/plugin-node-resolve": "npm:16.0.3"
@@ -1835,10 +1835,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grafana/tsconfig@npm:2.1.0":
-  version: 2.1.0
-  resolution: "@grafana/tsconfig@npm:2.1.0"
-  checksum: 10c0/7a0610cfcdcde464e97678a5eaa6f5a392fc87351a46277cd4794afc92583c5a051015428b52ea2eafadac3d66b72d019e8f2ae31e11b1a8abc786707c6f582d
+"@grafana/tsconfig@npm:2.2.0":
+  version: 2.2.0
+  resolution: "@grafana/tsconfig@npm:2.2.0"
+  checksum: 10c0/7e1adaa93888a9d82c2ed3a487eaa5901032cd206e61efe31be29590ad679c3dad15cb337c0adc7cac00f061bc12d7b5b42a7a5bca60a39e484ec02e1fa1cc70
   languageName: node
   linkType: hard
 

@@ -41,6 +41,9 @@
   },
   "author": "Grafana Labs <team@grafana.com> (https://grafana.com)",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "peerDependencies": {
     "@grafana/data": ">=11.6.0",
     "@grafana/ui": ">=11.6.0",

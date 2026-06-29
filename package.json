@@ -51,7 +51,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.3",
+    "@arethetypeswrong/cli": "0.18.4",
     "@grafana/data": "13.0.1",
     "@grafana/eslint-config": "9.0.0",
     "@grafana/tsconfig": "2.2.0",

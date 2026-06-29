@@ -52,10 +52,10 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.4",
-    "@grafana/data": "13.0.1",
+    "@grafana/data": "13.1.0",
     "@grafana/eslint-config": "9.0.0",
     "@grafana/tsconfig": "2.2.0",
-    "@grafana/ui": "13.0.1",
+    "@grafana/ui": "13.1.0",
     "@rollup/plugin-commonjs": "29.0.3",
     "@rollup/plugin-node-resolve": "16.0.3",
     "@stylistic/eslint-plugin-ts": "4.4.1",

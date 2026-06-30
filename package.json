@@ -80,7 +80,7 @@
     "identity-obj-proxy": "3.0.0",
     "jest": "30.4.2",
     "jest-environment-jsdom": "30.4.1",
-    "prettier": "3.8.4",
+    "prettier": "3.9.0",
     "publint": "0.3.21",
     "react": "18.3.1",
     "react-dom": "18.3.1",

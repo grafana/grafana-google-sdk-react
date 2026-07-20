@@ -29,8 +29,6 @@ export default defineConfig([
       '**/logs',
       '**/*.log',
       '**/npm-debug.log*',
-      '**/yarn-debug.log*',
-      '**/yarn-error.log*',
       '**/.pnpm-debug.log*',
       '**/node_modules/',
       '**/pids',

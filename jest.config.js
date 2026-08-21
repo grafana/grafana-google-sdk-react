@@ -10,6 +10,8 @@ const grafanaESModules = [
   '@grafana/schema',
   '@grafana/data',
   '@grafana/ui',
+  '@react-hookz/web',
+  '@ver0/deep-equal',
   '@wojtekmaj/date-utils',
   'd3',
   'd3-color',

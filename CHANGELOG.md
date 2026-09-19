@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.7.0
+
+- Add support for React 19, updating the peer dependencies for `react` and `react-dom` to `^19.0.0`. This also updates the peer dependencies for `@grafana/data` and `@grafana/ui` to `^13.2.0`, which supports React 19.
+
 ## v0.6.1
 
 - Remove lodash usage

@@ -6,3 +6,8 @@ dist/
 compiled/
 .yarn/install-state.gz
 package.tgz
+
+# Local environment files can hold secrets
+.env
+.env.*
+!.env.example
